@@ -1,0 +1,387 @@
+/* General styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+body {
+    background-color: #f9f9f9;
+    color: #333;
+}
+
+
+/* Account page specific styles */
+.account-container {
+    max-width: 1000px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.account-header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.account-header h1 {
+    color: #ff69b4;
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    margin-top: 5px;
+}
+
+.account-header p {
+    color: #666;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.account-options {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+.account-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    width: 100%;
+    max-width: 380px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.account-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-header {
+    background-color: #ffecf5;
+    padding: 25px 20px;
+    text-align: center;
+}
+
+.card-header i {
+    font-size: 2rem;
+    color: #ff69b4;
+    margin-bottom: 15px;
+}
+
+.card-header h2 {
+    color: #ff69b4;
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+}
+
+.card-header p {
+    color: #666;
+}
+
+.card-content {
+    padding: 25px;
+}
+
+.features-list {
+    margin: 20px 0;
+    list-style: none;
+}
+
+.features-list li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    color: #555;
+}
+
+.features-list i {
+    color: #ff69b4;
+    margin-right: 10px;
+}
+
+.account-btn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #ff69b4;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 0.3s;
+}
+
+.account-btn:hover {
+    background-color: #ff4da6;
+}
+
+.account-btn.secondary {
+    background-color: transparent;
+    border: 2px solid #ff69b4;
+    color: #ff69b4;
+    margin-top: 15px;
+}
+
+.account-btn.secondary:hover {
+    background-color: #ffecf5;
+}
+
+/* Logged in view */
+.logged-in-container {
+    display: none;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.06);
+    padding: 30px;
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.user-avatar {
+    width: 70px;
+    height: 70px;
+    background-color: #ffecf5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.user-avatar i {
+    font-size: 1.8rem;
+    color: #ff69b4;
+}
+
+.user-details h2 {
+    color: #ff69b4;
+    margin-bottom: 5px;
+}
+
+.user-details p {
+    color: #666;
+}
+
+.account-tabs {
+    display: flex;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+.account-tab {
+    padding: 10px 20px;
+    color: #666;
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    transition: all 0.3s;
+}
+
+.account-tab.active {
+    color: #ff69b4;
+    border-bottom: 3px solid #ff69b4;
+}
+
+.account-tab:hover:not(.active) {
+    color: #ff8cc6;
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.address-card {
+    border: 1px solid #eee;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.address-card h3 {
+    color: #ff69b4;
+    margin-bottom: 10px;
+}
+
+.address-card p {
+    color: #555;
+    margin-bottom: 5px;
+}
+
+.address-actions {
+    margin-top: 15px;
+}
+
+.address-actions button {
+    background: none;
+    border: none;
+    color: #ff69b4;
+    cursor: pointer;
+    margin-right: 15px;
+    padding: 0;
+}
+
+.address-actions button:hover {
+    text-decoration: underline;
+}
+
+.communication-prefs {
+    margin-top: 25px;
+}
+
+.communication-prefs label {
+    display: flex;
+    align-items: center;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+.communication-prefs input[type="checkbox"] {
+    margin-right: 10px;
+}
+
+.logout-btn {
+    margin-top: 30px;
+    color: #ff69b4;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-weight: bold;
+    display: block;
+    margin-left: auto;
+}
+
+.logout-btn:hover {
+    text-decoration: underline;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        padding: 15px 20px;
+        flex-wrap: wrap;
+    }
+    
+    nav {
+        order: 3;
+        width: 100%;
+        margin-top: 15px;
+    }
+    
+    nav ul {
+        justify-content: center;
+    }
+    
+    .account-options {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .user-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .user-avatar {
+        margin-right: 0;
+        margin-bottom: 15px;
+    }
+}
+/* Add these styles to your account.css file */
+
+/* Profile Settings Styles */
+.settings-section {
+    margin-bottom: 40px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.settings-section:last-child {
+    border-bottom: none;
+}
+
+.profile-form {
+    max-width: 500px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 1rem;
+    color: #333;
+    transition: border-color 0.3s;
+}
+
+.form-control:focus {
+    border-color: #ff69b4;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 105, 180, 0.1);
+}
+
+.form-text {
+    display: block;
+    margin-top: 5px;
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.form-check {
+    margin-bottom: 15px;
+}
+
+.form-check-input {
+    margin-right: 10px;
+}
+
+.form-check-label {
+    color: #555;
+}
+
+/* Success message styles */
+.alert {
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+.alert-success {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .profile-form {
+        max-width: 100%;
+    }
+}

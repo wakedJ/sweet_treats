@@ -1,0 +1,13 @@
+:root {
+    --primary: #ff1493;
+    --secondary: #8a2be2;
+    --tertiary: #ff69b4;
+    --background: #fff8fa;
+    --light-pink: #ffccd5;
+    --white: #ffffff;
+    --text: #333333;
+    --shadow: 0 5px 15px rgba(0,0,0,0.05);
+    --sidebar-width: 250px;
+    --sidebar-collapsed: 70px;
+    --header-height: 70px;
+}

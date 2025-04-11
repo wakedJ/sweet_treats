@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sweet Treats Admin - Products</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Sidebar Navigation (Same as dashboard) -->
+        <nav id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <h3>Sweet Treats</h3>
+                <div class="sidebar-toggle-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </div>
+            </div>
+            
+            <div class="admin-profile">
+                <div class="admin-avatar">
+                    <img src="images/admin-avatar.jpg" alt="Admin">
+                </div>
+                <div class="admin-info">
+                    <p class="admin-name">Admin User</p>
+                    <p class="admin-role">Administrator</p>
+                </div>
+            </div>
+            
+            <ul class="nav-links">
+                <li>
+                    <a href="index.php">
+                        <i class="fas fa-home"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="active">
+                    <a href="products.php">
+                        <i class="fas fa-candy-cane"></i>
+                        <span>Products</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="add-product.php">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>Add Product</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="categories.php">
+                        <i class="fas fa-tags"></i>
+                        <span>Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.php">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="customers.php">
+                        <i class="fas fa-users"></i>
+                        <span>Customers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="reviews.php">
+                        <i class="fas fa-star"></i>
+                        <span>Reviews</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="promotions.php">
+                        <i class="fas fa-percent"></i>
+                        <span>Promotions</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="settings.php">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="logout.php">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <p>&copy; 2025 Sweet Treats</p>
+            </div>
+        </nav>
+        
+        <!-- Main Content Area -->
+        <div class="main-content">
+            <header class="admin-header">
+                <div class="header-left">
+                    <button id="sidebarToggle" class="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2>Products</h2>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <input type="text" placeholder="Search products...">
+                        <button><i class="fas fa-search"></i></button>
+                    </div>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-count">3</span>
+                    </div>
+                    <div class="messages">
+                        <i class="fas fa-envelope"></i>
+                        <span class="messages-count">5</span>
+                    </div>
+                </div>
+            </header>
+            
+            <div class="products-content">
+                <!-- Products Header with Filters and Actions -->
+                <div class="products-header">
+                    <div class="filters-section">
+                        <div class="filter-item">
+                            <label for="categoryFilter">Category:</label>
+                            <select id="categoryFilter" class="form-select">
+                                <option value="all">All Categories</option>
+                                <option value="chocolate">Chocolate</option>
+                                <option value="gummies">Gummies</option>
+                                <option value="hard-candy">Hard Candy</option>
+                                <option value="international">International</option>
+                                <option value="seasonal">Seasonal</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label for="stockFilter">Stock Status:</label>
+                            <select id="stockFilter" class="form-select">
+                                <option value="all">All</option>
+                                <option value="in-stock">In Stock</option>
+                                <option value="low-stock">Low Stock</option>
+                                <option value="out-of-stock">Out of Stock</option>
+                            </select>
+                        </div>
+                        <div class="filter-item">
+                            <label for="sortBy">Sort By:</label>
+                            <select id="sortBy" class="form-select">
+                                <option value="name-asc">Name (A-Z)</option>
+                                <option value="name-desc">Name (Z-A)</option>
+                                <option value="price-low">Price (Low to High)</option>
+                                <option value="price-high">Price (High to Low)</option>
+                                <option value="stock-low">Stock (Low to High)</option>
+                                <option value="rating-high">Rating (High to Low)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="actions-section">
+                        <div class="view-options">
+                            <button class="view-option active" data-view="grid">
+                                <i class="fas fa-th-large"></i>
+                            </button>
+                            <button class="view-option" data-view="list">
+                                <i class="fas fa-list"></i>
+                            </button>
+                        </div>
+                        <a href="add-product.php" class="btn btn-primary add-product-btn">
+                            <i class="fas fa-plus"></i> Add New Product
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Products Count -->
+                <div class="products-count">
+                    Showing <span>12</span> of <span>354</span> products
+                </div>
+                
+                <!-- Products Grid View (Default) -->
+                <div class="products-grid active">
+                    <div class="product-card">
+                        <div class="product-badge bestseller">Bestseller</div>
+                        <div class="product-thumbnail">
+                            <img src="images/products/chocolate-1.jpg" alt="Belgian Chocolate Truffles">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">Belgian Chocolate Truffles</h4>
+                            <div class="product-category">Chocolate</div>
+                            <div class="product-meta">
+                                <div class="product-price">$12.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                            <div class="product-stock in-stock">
+                                <i class="fas fa-check-circle"></i> In Stock (43)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge new">New</div>
+                        <div class="product-thumbnail">
+                            <img src="images/products/gummies-1.jpg" alt="Rainbow Gummy Bears">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">Rainbow Gummy Bears</h4>
+                            <div class="product-category">Gummies</div>
+                            <div class="product-meta">
+                                <div class="product-price">$8.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.7</span>
+                                </div>
+                            </div>
+                            <div class="product-stock in-stock">
+                                <i class="fas fa-check-circle"></i> In Stock (120)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge sale">Sale</div>
+                        <div class="product-thumbnail">
+                            <img src="images/products/international-1.jpg" alt="Japanese Kit Kat - Matcha">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">Japanese Kit Kat - Matcha</h4>
+                            <div class="product-category">International</div>
+                            <div class="product-meta">
+                                <div class="product-price">
+                                    <span class="original-price">$9.99</span>
+                                    $7.49
+                                </div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.8</span>
+                                </div>
+                            </div>
+                            <div class="product-stock low-stock">
+                                <i class="fas fa-exclamation-circle"></i> Low Stock (8)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-thumbnail">
+                            <img src="images/products/hard-candy-1.jpg" alt="Assorted Lollipops">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">Assorted Lollipops</h4>
+                            <div class="product-category">Hard Candy</div>
+                            <div class="product-meta">
+                                <div class="product-price">$6.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.5</span>
+                                </div>
+                            </div>
+                            <div class="product-stock in-stock">
+                                <i class="fas fa-check-circle"></i> In Stock (75)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge popular">Popular</div>
+                        <div class="product-thumbnail">
+                            <img src="images/products/chocolate-2.jpg" alt="Dark Chocolate Sea Salt">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">Dark Chocolate Sea Salt</h4>
+                            <div class="product-category">Chocolate</div>
+                            <div class="product-meta">
+                                <div class="product-price">$10.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.9</span>
+                                </div>
+                            </div>
+                            <div class="product-stock in-stock">
+                                <i class="fas fa-check-circle"></i> In Stock (32)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-thumbnail">
+                            <img src="images/products/international-2.jpg" alt="British Cadbury Flake">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">British Cadbury Flake</h4>
+                            <div class="product-category">International</div>
+                            <div class="product-meta">
+                                <div class="product-price">$4.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.6</span>
+                                </div>
+                            </div>
+                            <div class="product-stock low-stock">
+                                <i class="fas fa-exclamation-circle"></i> Low Stock (5)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-thumbnail">
+                            <img src="images/products/gummies-2.jpg" alt="Sour Worm Gummies">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">Sour Worm Gummies</h4>
+                            <div class="product-category">Gummies</div>
+                            <div class="product-meta">
+                                <div class="product-price">$7.49</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.4</span>
+                                </div>
+                            </div>
+                            <div class="product-stock in-stock">
+                                <i class="fas fa-check-circle"></i> In Stock (65)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="product-card">
+                        <div class="product-badge seasonal">Seasonal</div>
+                        <div class="product-thumbnail">
+                            <img src="images/products/seasonal-1.jpg" alt="Candy Canes - Peppermint">
+                            <div class="product-actions">
+                                <button class="product-action" title="Edit Product">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="product-action" title="Delete Product">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="product-details">
+                            <h4 class="product-title">Candy Canes - Peppermint</h4>
+                            <div class="product-category">Seasonal</div>
+                            <div class="product-meta">
+                                <div class="product-price">$5.99</div>
+                                <div class="product-rating">
+                                    <i class="fas fa-star"></i>
+                                    <span>4.2</span>
+                                </div>
+                            </div>
+                            <div class="product-stock out-of-stock">
+                                <i class="fas fa-times-circle"></i> Out of Stock
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products List View (Hidden by default) -->
+                <div class="products-list">
+                    <!-- List view content goes here - similar to grid but with different layout -->
+                    <!-- This section can be populated via JavaScript or server-side code -->
+                </div>
+                
+                <!-- Pagination -->
+                <div class="pagination-container">
+                    <nav aria-label="Product pagination">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="items-per-page">
+                        <label for="itemsPerPage">Show:</label>
+                        <select id="itemsPerPage" class="form-select">
+                            <option value="12">12</option>
+                            <option value="24">24</option>
+                            <option value="48">48</option>
+                            <option value="96">96</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/admin-script.js"></script>
+    <script src="js/products.js"></script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<button id="backToTop" onclick="scrollToTop()">↑</button>
+
+<style>
+    #backToTop {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #ff8ba7;
+        color: white;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        transition: opacity 0.3s, transform 0.3s;
+    }
+
+    #backToTop:hover {
+        background-color: #ff6b8a;
+        transform: scale(1.1);
+    }
+</style>

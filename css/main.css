@@ -1,0 +1,62 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--background);
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M54.627 0l.83.828-1.415 1.415L51.8 0h2.827zM5.373 0l-.83.828L5.96 2.243 8.2 0H5.374zM48.97 0l3.657 3.657-1.414 1.414L46.143 0h2.828zM11.03 0L7.372 3.657 8.787 5.07 13.857 0H11.03zm32.284 0L49.8 6.485 48.384 7.9l-7.9-7.9h2.83zM16.686 0L10.2 6.485 11.616 7.9l7.9-7.9h-2.83zm20.97 0l9.315 9.314-1.414 1.414L34.828 0h2.83zM22.344 0L13.03 9.314l1.414 1.414L25.172 0h-2.83zM32 0l12.142 12.142-1.414 1.414L30 2.828 17.272 15.556l-1.414-1.414L28 2.828 17.272 14.142 15.858 12.73 28 .587l3.415 3.414L40.143 0H32zM0 0l28 28-1.414 1.414L0 2.828V0zm0 5.657l28 28L26.586 35.07 0 8.485v-2.83zm0 5.657l28 28-1.414 1.414L0 14.142v-2.83zm0 5.657l28 28L26.586 46.4 0 19.8v-2.83zm0 5.657l28 28-1.414 1.414L0 25.456v-2.83zm0 5.657l28 28-1.414 1.414L0 31.113v-2.83zM0 40l28 28-1.414 1.414L0 43.24v-3.24zm0 5.656l28 28L26.586 75.07 0 48.485v-2.83zm0 5.656l28 28-1.414 1.414L0 54.142v-2.83zm0 5.657l28 28-1.414 1.414L0 59.8v-2.83zm54.627 8.657L28 28 29.414 26.586 60 57.172v2.83zM54.627 60L28 33.373 29.414 31.96 60 62.544v-2.83zm-5.657 0L28 39.03l1.414-1.414L54.627 60h-5.657zm-5.657 0L28 44.686l1.414-1.414L48.97 60h-5.657zm-5.657 0L28 50.343l1.414-1.414L43.314 60h-5.657zm-5.657 0L28 56l1.414-1.414L37.657 60h-5.657z' fill='%23ff69b4' fill-opacity='0.05' fill-rule='evenodd'/%3E%3C/svg%3E");
+    line-height: 1.6;
+    color: var(--text);
+    display: flex;
+    overflow-x: hidden;
+}
+
+h1, h2, h3 {
+    font-family: 'Fredoka One', cursive;
+    color: var(--primary);
+}
+
+/* Candy floaters animation */
+.candy-floater {
+    position: fixed;
+    font-size: 2rem;
+    animation: float 8s infinite ease-in-out;
+    z-index: -1;
+    opacity: 0.5;
+}
+
+.candy-1 {
+    top: 10%;
+    left: 15%;
+    animation-delay: 0s;
+}
+
+.candy-2 {
+    top: 70%;
+    right: 10%;
+    animation-delay: 2s;
+}
+
+.candy-3 {
+    bottom: 30%;
+    left: 5%;
+    animation-delay: 4s;
+}
+
+.candy-4 {
+    top: 40%;
+    right: 20%;
+    animation-delay: 6s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+    }
+    50% {
+        transform: translateY(-20px) rotate(10deg);
+    }
+}

@@ -1,0 +1,51 @@
+/* Sidebar Navigation */
+.sidebar {
+    width: var(--sidebar-width);
+    height: 100vh;
+    background-color: var(--white);
+    border-right: 2px dashed var(--light-pink);
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 100;
+    transition: all 0.3s ease;
+    overflow-y: auto;
+    box-shadow: var(--shadow);
+}
+
+/* Rest of your sidebar CSS... */
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: all 0.3s ease;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Rest of your main content CSS... */
+
+/* Header */
+.header {
+    background-color: var(--white);
+    border-bottom: 2px dashed var(--light-pink);
+    padding: 15px 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    z-index: 90;
+    box-shadow: var(--shadow);
+}
+
+/* Rest of your header CSS... */
+
+/* Content Area */
+.content {
+    padding: 25px;
+    flex: 1;
+}

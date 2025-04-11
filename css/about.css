@@ -1,0 +1,183 @@
+/* Additional styles specific to About page */
+.about-hero {
+    background-color: #ffccd5;
+    padding: 100px 0 60px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.about-hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 30px;
+    background: linear-gradient(135deg, #ffccd5 25%, transparent 25%) -15px 0,
+                linear-gradient(225deg, #ffccd5 25%, transparent 25%) -15px 0,
+                linear-gradient(315deg, #ffccd5 25%, transparent 25%),
+                linear-gradient(45deg, #ffccd5 25%, transparent 25%);
+    background-size: 30px 30px;
+    background-color: white;
+}
+
+.about-hero h1 {
+    font-size: 3rem;
+    color: #ff69b4;
+    margin-bottom: 1rem;
+}
+
+.about-hero p {
+    font-size: 1.2rem;
+    max-width: 800px;
+    margin: 0 auto;
+    color: #444;
+}
+
+.about-sections {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.about-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 80px;
+    gap: 50px;
+}
+
+.about-section:nth-child(even) {
+    flex-direction: row-reverse;
+}
+
+.about-text {
+    flex: 1;
+}
+
+.about-text h2 {
+    color: #ff69b4;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.about-text h2::after {
+    content: '';
+    display: block;
+    width: 60px;
+    height: 3px;
+    background-color: #ff69b4;
+    margin-top: 8px;
+}
+
+.about-text p {
+    color: #444;
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.about-image {
+    flex: 1;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.about-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease;
+}
+
+.about-image:hover img {
+    transform: scale(1.05);
+}
+
+.about-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom right, rgba(255, 105, 180, 0.2), transparent);
+    pointer-events: none;
+}
+
+
+.values-section {
+    padding: 80px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.values-section h2 {
+    color: #ff69b4;
+    font-size: 2.5rem;
+    margin-bottom: 50px;
+}
+
+.values-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+}
+
+.value-card {
+    background: #fff;
+    border-radius: 15px;
+    padding: 30px 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.value-card:hover {
+    transform: translateY(-10px);
+}
+
+.value-icon {
+    width: 80px;
+    height: 80px;
+    background: #ffccd5;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+}
+
+.value-icon i {
+    font-size: 2rem;
+    color: #ff69b4;
+}
+
+.value-card h3 {
+    color: #ff69b4;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.value-card p {
+    color: #444;
+    line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+    .about-section {
+        flex-direction: column;
+        gap: 30px;
+    }
+    
+    .about-section:nth-child(even) {
+        flex-direction: column;
+    }
+    
+    .about-hero h1 {
+        font-size: 2.5rem;
+    }
+}
