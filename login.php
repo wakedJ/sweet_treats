@@ -2,18 +2,27 @@
 session_start(); // Start session for login persistence
 include "includes/db.php"; // Include database connection
 
+// For debugging - you can remove this in production
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+
 $error_message = ""; // Initialize error message variable
+
+// Save the current cart state before any processing
+$guest_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
+// Save the redirect URL if it exists
+$redirect_to = isset($_GET['redirect']) ? $_GET['redirect'] : '';
 
 if (isset($_POST['login'])) {
     $email = trim($_POST['email']);
     $password = $_POST['password'];
+    // Get redirect from POST if it exists (from hidden field)
+    $redirect_to = isset($_POST['redirect']) ? $_POST['redirect'] : $redirect_to;
 
     if (empty($email) || empty($password)) {
         $error_message = "Both fields are required.";
     } else {
         try {
-            // Remove the getConnection function from here
-            
             // Check if email exists
             $query = "SELECT id, password, role, full_name FROM users WHERE email = ?";
             $stmt = $conn->prepare($query);
@@ -26,18 +35,40 @@ if (isset($_POST['login'])) {
                 
                 // Verify password
                 if (password_verify($password, $row['password'])) {
+                    // IMPORTANT: Store the cart before setting user session variables
+                    $temp_cart = $guest_cart;
+                    
                     // Store user information in session
                     $_SESSION['user_id'] = $row['id'];
                     $_SESSION['user_role'] = $row['role'];
                     $_SESSION['user_name'] = $row['full_name'];
                     
-                    // Redirect based on role
-                    if ($row['role'] === 'admin') {
-                        header("Location: admin/dashboard.php");
-                    } else {
-                        header("Location: account.php"); // Change to account.php instead of index.php
+                    // Restore the cart
+                    if (!empty($temp_cart)) {
+                        $_SESSION['cart'] = $temp_cart;
+                        
+                        // Optional: If you store cart in database, you might want to merge or sync here
+                        // For example:
+                        // mergeCartWithDatabase($_SESSION['user_id'], $_SESSION['cart']);
                     }
-                    exit();
+                    
+                    // Redirect based on role or redirect parameter
+                    // Redirect based on role or redirect parameter
+            if (!empty($redirect_to)) {
+                if ($redirect_to == 'checkout') {
+                    header("Location: checkout.php");
+                } else {
+                    // Handle other redirects if needed
+                    header("Location: $redirect_to");
+                }
+                exit();
+            } else if ($row['role'] === 'admin') {
+                header("Location: admin/dashboard.php");
+                exit();
+            } else {
+                header("Location: account.php");
+                exit();
+            }
                 } else {
                     $error_message = "Incorrect email or password.";
                 }
@@ -50,6 +81,15 @@ if (isset($_POST['login'])) {
             $error_message = "System error: " . $e->getMessage();
         }
     }
+}
+
+// For debugging - you can remove in production
+$session_debug = "";
+if (isset($_SESSION['cart'])) {
+    $session_debug .= "Cart has " . count($_SESSION['cart']) . " items. ";
+}
+if (isset($_SESSION['user_id'])) {
+    $session_debug .= "User ID: " . $_SESSION['user_id'] . ". ";
 }
 ?>
 
@@ -123,6 +163,13 @@ if (isset($_POST['login'])) {
             margin-bottom: 15px;
             text-align: center;
         }
+        .debug-info {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }
     </style>
 </head>
 <body>
@@ -142,6 +189,10 @@ if (isset($_POST['login'])) {
         <form method="post" action="">
             <input type="email" name="email" placeholder="Email address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
             <input type="password" name="password" placeholder="Password" required>
+            
+            <?php if (!empty($redirect_to)): ?>
+            <input type="hidden" name="redirect" value="<?php echo htmlspecialchars($redirect_to); ?>">
+            <?php endif; ?>
 
             <div class="forgot-password">
                 <a href="forgot-password.php">Forgot password?</a>
@@ -152,6 +203,12 @@ if (isset($_POST['login'])) {
             <div class="sign-in-link">
                 New customer? <a href="register.php">Register here</a>
             </div>
+            
+            <?php if (!empty($session_debug)): ?>
+            <div class="debug-info">
+                Debug: <?php echo $session_debug; ?>
+            </div>
+            <?php endif; ?>
         </form>
     </div>
 </body>

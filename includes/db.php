@@ -4,11 +4,10 @@
     $user = "root"; 
     $password = ""; 
     $database = "streats";
-    $port = 3307;  // Your custom MySQL port
     
     // Create connection
     try {
-        $conn = new mysqli($host, $user, $password, $database, $port);
+        $conn = new mysqli($host, $user, $password, $database);
         
         // Check connection
         if ($conn->connect_error) {
