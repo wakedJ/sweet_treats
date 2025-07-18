@@ -1,125 +1,158 @@
+<?php
+// Simple session debugger for checkout issues
+// Place this file in the same directory as your checkout.php
+// Then access it via: http://yoursite.com/checkout_debug.php
+
+session_start();
+header('Content-Type: text/html; charset=utf-8');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Form</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/checkout.css">
+    <title>Checkout Debug Tool</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        h1, h2 {
+            color: #8e44ad;
+        }
+        pre {
+            background-color: #f1f1f1;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .actions {
+            margin-top: 20px;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background-color: #8e44ad;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            margin-right: 10px;
+        }
+        .btn:hover {
+            background-color: #7d3c98;
+        }
+        .warn {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
 </head>
-    <body>
-        <div class="container">
-            <div class="checkout-hero">
-                <h1>Checkout</h1>
-                <p>You're just a few steps away from completing your sweet order!</p>
-                
-                <!-- Candy Icons -->
-                <div class="candy-icon candy-1">🍭</div>
-                <div class="candy-icon candy-2">🍬</div>
-                <div class="candy-icon candy-3">🍪</div>
-                <div class="candy-icon candy-4">🧁</div>
-            </div>
-            
-            <div class="order-summary">
-                <h2>Order Summary</h2>
-                <div class="order-total">
-                    <span>Total:</span>
-                    <span>$99.97</span>
-                </div>
-            </div>
-            
-            <div class="form-container">
-                <form id="checkout-form">
-                    <h2>Shipping Information</h2>
-                    <div class="form-row">
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="firstName">First Name *</label>
-                                <input type="text" id="firstName" required>
-                            </div>
-                        </div>
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="lastName">Last Name *</label>
-                                <input type="text" id="lastName" required>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="email">Email Address *</label>
-                        <input type="email" id="email" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="address">Street Address *</label>
-                        <input type="text" id="address" required>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-col">
-                            <div class="form-group">
-                                <label for="city">City *</label>
-                                <input type="text" id="city" required>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="form-group">
-                        <label for="phone">Phone Number *</label>
-                        <input type="tel" id="phone" required>
-                    </div>
-                    
-                    <button type="submit" class="submit-btn">Complete Order</button>
+<body>
+    <div class="container">
+        <h1>Checkout Debug Tool</h1>
+        
+        <div class="card">
+            <h2>Cart Status</h2>
+            <?php if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])): ?>
+                <p>✅ Cart data exists in session</p>
+                <p>Number of items: <strong><?php echo count($_SESSION['cart']); ?></strong></p>
+            <?php else: ?>
+                <p class="warn">❌ Cart data is empty or not set in session</p>
+            <?php endif; ?>
+        </div>
+        
+        <div class="card">
+            <h2>Cart Summary Status</h2>
+            <?php if (isset($_SESSION['cart_summary']) && !empty($_SESSION['cart_summary'])): ?>
+                <p>✅ Cart summary exists in session</p>
+                <p>Total: <strong>$<?php echo isset($_SESSION['cart_summary']['total']) ? 
+                    number_format($_SESSION['cart_summary']['total'], 2) : 'Not set'; ?></strong></p>
+            <?php else: ?>
+                <p class="warn">❌ Cart summary is empty or not set in session</p>
+            <?php endif; ?>
+        </div>
+        
+        <div class="card">
+            <h2>Session Data (Cart)</h2>
+            <?php if (isset($_SESSION['cart'])): ?>
+                <pre><?php print_r($_SESSION['cart']); ?></pre>
+            <?php else: ?>
+                <p class="warn">No cart data in session</p>
+            <?php endif; ?>
+        </div>
+        
+        <div class="card">
+            <h2>Session Data (Cart Summary)</h2>
+            <?php if (isset($_SESSION['cart_summary'])): ?>
+                <pre><?php print_r($_SESSION['cart_summary']); ?></pre>
+            <?php else: ?>
+                <p class="warn">No cart summary in session</p>
+            <?php endif; ?>
+        </div>
+        
+        <div class="card">
+            <h2>All Session Data</h2>
+            <pre><?php print_r($_SESSION); ?></pre>
+        </div>
+        
+        <div class="actions">
+            <a href="cart.php" class="btn">Go to Cart</a>
+            <a href="checkout.php" class="btn">Go to Checkout</a>
+            <?php if (isset($_SESSION['cart'])): ?>
+                <form method="post" style="display: inline;">
+                    <input type="hidden" name="fix_cart" value="1">
+                    <button type="submit" class="btn">Fix Cart Structure</button>
                 </form>
-            </div>
+            <?php endif; ?>
         </div>
         
-        <div class="modal" id="confirmation-modal">
-            <div class="modal-content">
-                <div class="success-icon">🎉</div>
-                <h2>Yay! Order Confirmed!</h2>
-                <p>Thank you for your purchase. We've sent a confirmation email to <span id="confirmation-email"></span>.</p>
-                <p>Your order number is: <strong id="order-number"></strong></p>
-                <button onclick="closeModal()" class="modal-btn">Continue Shopping</button>
-            </div>
-        </div>
-        
-        <script>
-            // Simulate order processing
-            document.getElementById('checkout-form').addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Normally this would be a server call, but we'll simulate with a timeout
-                setTimeout(function() {
-                    // Generate a random order number
-                    const orderNumber = 'SWEET-' + Math.floor(100000 + Math.random() * 900000);
+        <?php
+        // Simple fix for cart structure if needed
+        if (isset($_POST['fix_cart']) && isset($_SESSION['cart'])) {
+            $fixed_cart = [];
+            foreach ($_SESSION['cart'] as $key => $item) {
+                // Make sure each cart item has the required structure
+                if (is_array($item) && isset($item['product_id'])) {
+                    $fixed_cart[$key] = $item;
+                } else if (is_numeric($key)) {
+                    // If the key is the product_id
+                    $price = null;
+                    $quantity = is_array($item) && isset($item['quantity']) ? $item['quantity'] : 1;
                     
-                    // Get the email to display in confirmation
-                    const email = document.getElementById('email').value;
+                    if (is_array($item) && isset($item['price'])) {
+                        $price = $item['price'];
+                    }
                     
-                    // Update the confirmation modal
-                    document.getElementById('confirmation-email').textContent = email;
-                    document.getElementById('order-number').textContent = orderNumber;
-                    
-                    // Show the confirmation modal
-                    document.getElementById('confirmation-modal').style.display = 'flex';
-                    
-                    // In a real application, this is where you would trigger the email sending
-                    console.log('Confirmation email sent to:', email);
-                }, 1500); // Simulate a 1.5 second processing time
-            });
-            
-            function closeModal() {
-                const modal = document.querySelector('.modal'); // Adjust selector if needed
-                if (modal) {
-                    modal.style.display = 'none';
+                    $fixed_cart[$key] = [
+                        'product_id' => $key,
+                        'quantity' => $quantity,
+                        'price' => $price
+                    ];
                 }
-
-                // Redirect to the shop page
-                window.location.href = 'shop.php';
             }
-        </script>
-    </body>
-    </html>
+            
+            $_SESSION['cart'] = $fixed_cart;
+            echo '<div class="card"><p>Cart structure has been fixed. Refresh to see changes.</p></div>';
+        }
+        ?>
+    </div>
+</body>
+</html>

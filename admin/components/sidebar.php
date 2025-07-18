@@ -50,10 +50,22 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
                 <span class="nav-text">Orders</span>
             </a>
         </li>
+        <li class="nav-item" data-title="Messages">
+            <a href="index.php?page=messages" class="nav-link <?php echo ($current_page === 'messages') ? 'active' : ''; ?>">
+                <span class="nav-icon">✉️</span>
+                <span class="nav-text">Messages</span>
+            </a>
+        </li>
         <li class="nav-item" data-title="Reviews">
             <a href="index.php?page=reviews" class="nav-link <?php echo ($current_page === 'reviews') ? 'active' : ''; ?>">
                 <span class="nav-icon">⭐</span>
                 <span class="nav-text">Reviews</span>
+            </a>
+        </li>
+        <li class="nav-item" data-title="Promo">
+            <a href="index.php?page=promo" class="nav-link <?php echo ($current_page === 'promo') ? 'active' : ''; ?>">
+                <span class="nav-icon">📢</span>
+                <span class="nav-text">Promo</span>
             </a>
         </li>
         <li class="nav-item" data-title="Delivery">
@@ -69,7 +81,7 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
             </a>
         </li>
         <li class="nav-item" data-title="Logout">
-            <a href="logout.php" class="nav-link">
+            <a href="index.php?page=logout" class="nav-link">
                 <span class="nav-icon">🚪</span>
                 <span class="nav-text">Logout</span>
             </a>
@@ -78,24 +90,163 @@ $current_page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 </div>
 
 <script>
-// JavaScript for sidebar toggle and dropdown functionality
+// JavaScript for responsive sidebar functionality
 document.addEventListener('DOMContentLoaded', function() {
-    // Toggle sidebar collapse
+    const sidebar = document.getElementById('sidebar');
+    const mainContent = document.getElementById('main-content');
     const toggleBtn = document.getElementById('toggle-btn');
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    
+    // Create mobile menu button
+    const mobileMenuBtn = document.createElement('button');
+    mobileMenuBtn.className = 'mobile-menu-btn';
+    mobileMenuBtn.innerHTML = '☰';
+    mobileMenuBtn.id = 'mobile-menu-btn';
+    
+    // Create overlay for mobile
+    const overlay = document.createElement('div');
+    overlay.className = 'sidebar-overlay';
+    overlay.id = 'sidebar-overlay';
+    
+    // Insert mobile menu button into header
+    const header = document.querySelector('.header');
+    const headerLeft = document.querySelector('.header-left');
+    if (header && headerLeft) {
+        headerLeft.insertBefore(mobileMenuBtn, headerLeft.firstChild);
+    }
+    
+    // Insert overlay into body
+    document.body.appendChild(overlay);
+    
+    // Check if we're on mobile
+    function isMobile() {
+        return window.innerWidth <= 768;
+    }
+    
+    // Toggle sidebar collapse (desktop)
     if (toggleBtn) {
         toggleBtn.addEventListener('click', function() {
-            document.getElementById('sidebar').classList.toggle('collapsed');
-            document.getElementById('main-content').classList.toggle('expanded');
+            if (!isMobile()) {
+                sidebar.classList.toggle('collapsed');
+                mainContent.classList.toggle('expanded');
+                
+                // Save state to localStorage (if needed)
+                const isCollapsed = sidebar.classList.contains('collapsed');
+                localStorage.setItem('sidebarCollapsed', isCollapsed);
+            }
         });
     }
     
+    // Mobile menu toggle
+    mobileMenuBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (isMobile()) {
+            sidebar.classList.toggle('show');
+            overlay.classList.toggle('show');
+            document.body.style.overflow = sidebar.classList.contains('show') ? 'hidden' : '';
+        }
+    });
+    
+    // Close mobile menu when clicking overlay
+    overlay.addEventListener('click', function() {
+        if (isMobile()) {
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+    });
+    
+    // Close mobile menu when clicking a nav link
+    const navLinks = document.querySelectorAll('.nav-link:not(.dropdown-toggle)');
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            if (isMobile()) {
+                sidebar.classList.remove('show');
+                overlay.classList.remove('show');
+                document.body.style.overflow = '';
+            }
+        });
+    });
+    
     // Dropdown toggle functionality
-    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
     dropdownToggles.forEach(toggle => {
         toggle.addEventListener('click', function(e) {
             e.preventDefault();
-            this.nextElementSibling.classList.toggle('show');
+            const dropdownMenu = this.nextElementSibling;
+            
+            // Close other dropdowns
+            dropdownToggles.forEach(otherToggle => {
+                if (otherToggle !== this) {
+                    const otherMenu = otherToggle.nextElementSibling;
+                    if (otherMenu) {
+                        otherMenu.classList.remove('show');
+                    }
+                }
+            });
+            
+            // Toggle current dropdown
+            if (dropdownMenu) {
+                dropdownMenu.classList.toggle('show');
+            }
         });
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', function() {
+        const mobile = isMobile();
+        
+        if (!mobile) {
+            // Desktop mode
+            sidebar.classList.remove('show');
+            overlay.classList.remove('show');
+            document.body.style.overflow = '';
+            
+            // Restore collapsed state if it was saved
+            const wasCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+            if (wasCollapsed) {
+                sidebar.classList.add('collapsed');
+                mainContent.classList.add('expanded');
+            }
+        } else {
+            // Mobile mode - ensure sidebar is hidden
+            sidebar.classList.remove('collapsed');
+            mainContent.classList.remove('expanded');
+            if (!sidebar.classList.contains('show')) {
+                document.body.style.overflow = '';
+            }
+        }
+    });
+    
+    // Close dropdowns when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('.dropdown')) {
+            dropdownToggles.forEach(toggle => {
+                const dropdownMenu = toggle.nextElementSibling;
+                if (dropdownMenu) {
+                    dropdownMenu.classList.remove('show');
+                }
+            });
+        }
+    });
+    
+    // Initialize sidebar state based on screen size
+    if (isMobile()) {
+        sidebar.classList.remove('collapsed');
+        mainContent.classList.remove('expanded');
+    } else {
+        // Restore saved state on desktop
+        const wasCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+        if (wasCollapsed) {
+            sidebar.classList.add('collapsed');
+            mainContent.classList.add('expanded');
+        }
+    }
+    
+    // Prevent body scroll when mobile menu is open
+    sidebar.addEventListener('touchmove', function(e) {
+        if (isMobile() && sidebar.classList.contains('show')) {
+            e.stopPropagation();
+        }
     });
 });
 </script>

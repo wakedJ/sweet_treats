@@ -1,0 +1,17 @@
+# Deny access to config directory
+<FilesMatch "^\.ht">
+    Order deny,allow
+    Deny from all
+</FilesMatch>
+
+# Protect the config directory
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^includes/config/ - [F,L]
+</IfModule>
+
+# Additional protection for sensitive files
+<Files ~ "^(brevo_config\.php)$">
+    Order deny,allow
+    Deny from all
+</Files>

@@ -1,5 +1,9 @@
+
 <?php
 // Make sure there's no whitespace or output before this point
+
+require_once './includes/check_admin.php';
+// Rest of your admin page code
 
 
 // Store messages in session instead of using redirects
@@ -178,50 +182,50 @@ if ($categories_query) {
 }
 ?>
 
-<div class="form-section">
-    <div class="form-header">
-        <h3 class="form-title"><?php echo $edit_mode ? 'Edit Product' : 'Add New Product'; ?></h3>
-    </div>
-    
-    <?php if (!empty($form_message)): ?>
-    <div class="alert <?php echo $form_success ? 'alert-success' : 'alert-danger'; ?>">
-        <?php echo $form_message; ?>
-    </div>
-    <?php endif; ?>
-    
-    <form id="product-form" class="form" method="post" enctype="multipart/form-data">
-        <?php if ($edit_mode): ?>
-            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
-        <?php endif; ?>
-        
-        <div class="form-row">
-            <div class="form-group">
-                <label for="product-name">Product Name</label>
-                <input type="text" id="product-name" name="name" class="form-control" 
-                       value="<?php echo $edit_mode ? htmlspecialchars($product['name']) : ''; ?>" placeholder="Enter product name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="product-category">Category</label>
-                <select id="product-category" name="category" class="form-control" required>
-                    <option value="">Select Category</option>
-                    <?php foreach ($categories as $category): ?>
-                        <option value="<?php echo $category['id']; ?>" <?php echo ($edit_mode && $product['category_id'] == $category['id']) ? 'selected' : ''; ?>>
-                            <?php echo htmlspecialchars($category['name']); ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
+    <div class="form-section">
+        <div class="form-header">
+            <h3 class="form-title"><?php echo $edit_mode ? 'Edit Product' : 'Add New Product'; ?></h3>
         </div>
         
-        <div class="form-row">
-            <div class="form-group">
-                <label for="product-price">Price ($)</label>
-                <input type="number" id="product-price" name="price" class="form-control" step="0.01" min="0" 
-                       value="<?php echo $edit_mode ? htmlspecialchars($product['price']) : ''; ?>" placeholder="Enter price" required>
+        <?php if (!empty($form_message)): ?>
+        <div class="alert <?php echo $form_success ? 'alert-success' : 'alert-danger'; ?>">
+            <?php echo $form_message; ?>
+        </div>
+        <?php endif; ?>
+        
+        <form id="product-form" class="form" method="post" enctype="multipart/form-data">
+            <?php if ($edit_mode): ?>
+                <input type="hidden" name="product_id" value="<?php echo $product_id; ?>">
+            <?php endif; ?>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="product-name">Product Name</label>
+                    <input type="text" id="product-name" name="name" class="form-control" 
+                        value="<?php echo $edit_mode ? htmlspecialchars($product['name']) : ''; ?>" placeholder="Enter product name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="product-category">Category</label>
+                    <select id="product-category" name="category" class="form-control" required>
+                        <option value="">Select Category</option>
+                        <?php foreach ($categories as $category): ?>
+                            <option value="<?php echo $category['id']; ?>" <?php echo ($edit_mode && $product['category_id'] == $category['id']) ? 'selected' : ''; ?>>
+                                <?php echo htmlspecialchars($category['name']); ?>
+                            </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
             </div>
             
-            <div class="form-group">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="product-price">Price ($)</label>
+                    <input type="number" id="product-price" name="price" class="form-control" step="0.01" min="0" 
+                        value="<?php echo $edit_mode ? htmlspecialchars($product['price']) : ''; ?>" placeholder="Enter price" required>
+                </div>
+                
+                <div class="form-group">
                 <label for="product-stock">Stock Quantity</label>
                 <input type="number" id="product-stock" name="stock" class="form-control" min="0" 
                        value="<?php echo $edit_mode ? htmlspecialchars($product['stock']) : ''; ?>" placeholder="Enter stock quantity" required>

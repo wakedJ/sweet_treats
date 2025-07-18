@@ -19,8 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Get and sanitize input values
         $name = isset($_POST['name']) ? trim($_POST['name']) : '';
         $description = isset($_POST['description']) ? trim($_POST['description']) : null;
-        $parent_category_id = isset($_POST['parent_category_id']) && !empty($_POST['parent_category_id']) ? 
-                            (int)$_POST['parent_category_id'] : null;
         $status = isset($_POST['status']) ? (int)$_POST['status'] : 1; // Default to active (1)
         
         // Validate required fields
@@ -40,30 +38,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
         $check_stmt->close();
         
-        // Handle NULL parent_category_id correctly
-        if ($parent_category_id === null) {
-            $sql = "INSERT INTO categories (name, description, parent_category_id, status) 
-                    VALUES (?, ?, NULL, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssi", $name, $description, $status);
-        } else {
-            // Verify parent category exists
-            $parent_check = "SELECT id FROM categories WHERE id = ?";
-            $parent_stmt = $conn->prepare($parent_check);
-            $parent_stmt->bind_param("i", $parent_category_id);
-            $parent_stmt->execute();
-            $parent_result = $parent_stmt->get_result();
-            
-            if ($parent_result->num_rows === 0) {
-                throw new Exception("Selected parent category does not exist");
-            }
-            $parent_stmt->close();
-            
-            $sql = "INSERT INTO categories (name, description, parent_category_id, status) 
-                    VALUES (?, ?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("ssii", $name, $description, $parent_category_id, $status);
-        }
+        // Insert new category
+        $sql = "INSERT INTO categories (name, description, status) VALUES (?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ssi", $name, $description, $status);
         
         if ($stmt->execute()) {
             $category_id = $conn->insert_id;

@@ -354,3 +354,363 @@ h1, h2, h3 {
         gap: 0;
     }
 }
+.hidden {
+    display: none;
+}
+
+.form-section {
+    margin-bottom: 40px;
+}
+
+.form-section h2 {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.delivery-method-summary {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 2px dashed #ffccd5;
+}
+
+.delivery-method-summary h3 {
+    color: #ff1493;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.selected-method {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.selected-method i {
+    color: #8a2be2;
+    font-size: 1.2rem;
+}
+
+.summary-items {
+    margin-bottom: 15px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.summary-row.discount {
+    color: #ff1493;
+}
+
+.store-info {
+    background-color: #fff8fa;
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 25px;
+    border: 1px dashed #ffccd5;
+}
+
+.store-info h3 {
+    color: #ff1493;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.store-info p {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.store-info i {
+    color: #8a2be2;
+}
+
+.store-map {
+    margin-top: 15px;
+}
+
+.map-placeholder {
+    height: 150px;
+    background-color: #f0e6ff;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #8a2be2;
+}
+
+.map-placeholder i {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+@media (max-width: 768px) {
+    .delivery-selector {
+        margin-left: 0;
+        margin-top: 10px;
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    .method-option {
+        flex: 1;
+        text-align: center;
+        justify-content: center;
+    }
+}
+/* Improved Responsive Checkout Page Styles */
+
+/* Base responsive container */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    width: 95%;
+}
+
+/* Improved responsive form elements */
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 12px 15px;
+}
+
+/* Responsive layout for different screen sizes */
+@media (max-width: 1200px) {
+    .checkout-hero h1 {
+        font-size: 2.3rem;
+    }
+}
+
+@media (max-width: 992px) {
+    .checkout-hero h1 {
+        font-size: 2rem;
+    }
+    
+    .form-row {
+        gap: 15px;
+    }
+    
+    .candy-icon {
+        font-size: 80% !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .checkout-hero {
+        padding: 30px 0;
+    }
+    
+    .checkout-hero h1 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+    }
+    
+    .checkout-hero p {
+        font-size: 1rem;
+    }
+    
+    .form-container,
+    .order-summary {
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .form-col {
+        flex: 1 1 100%;
+    }
+    
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group label {
+        margin-bottom: 5px;
+        font-size: 0.9rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 10px 12px;
+        font-size: 15px;
+    }
+    
+    .submit-btn {
+        padding: 12px 25px;
+        font-size: 16px;
+        min-width: 200px;
+        margin: 20px auto 10px;
+    }
+    
+    .order-item {
+        margin-bottom: 8px;
+        padding-bottom: 8px;
+        font-size: 0.9rem;
+    }
+    
+    .order-total {
+        margin-top: 15px;
+        padding-top: 10px;
+        font-size: 1rem;
+    }
+    
+    .form-container h2,
+    .order-summary h2 {
+        font-size: 1.5rem;
+        margin-bottom: 15px;
+    }
+    
+    .store-info {
+        padding: 15px;
+    }
+    
+    .delivery-method-summary {
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+    
+    .modal-content {
+        padding: 30px 20px;
+        width: 90%;
+        max-width: 400px;
+    }
+    
+    .success-icon {
+        font-size: 60px;
+    }
+}
+
+@media (max-width: 576px) {
+    .checkout-hero {
+        padding: 25px 0;
+        border-radius: 0 0 30% 30% / 15px;
+    }
+    
+    .checkout-hero h1 {
+        font-size: 1.5rem;
+    }
+    
+    .checkout-hero p {
+        font-size: 0.9rem;
+    }
+    
+    .form-container,
+    .order-summary {
+        padding: 15px;
+        border-radius: 12px;
+    }
+    
+    .form-group label {
+        font-size: 0.85rem;
+    }
+    
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        padding: 8px 10px;
+        font-size: 14px;
+        border-radius: 25px;
+    }
+    
+    .form-group textarea {
+        border-radius: 15px;
+    }
+    
+    .submit-btn {
+        padding: 10px 20px;
+        font-size: 15px;
+        min-width: 180px;
+    }
+    
+    .order-item {
+        font-size: 0.85rem;
+    }
+    
+    .order-total {
+        font-size: 0.95rem;
+    }
+    
+    .form-section {
+        margin-bottom: 30px;
+    }
+    
+    .success-icon {
+        font-size: 50px;
+        margin-bottom: 15px;
+    }
+    
+    .modal-content h2 {
+        font-size: 1.3rem;
+    }
+    
+    .modal-content p {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+    
+    .modal-btn {
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+    
+    .store-map .map-placeholder {
+        height: 120px;
+    }
+    
+    .selected-method {
+        gap: 10px;
+    }
+    
+    .store-info p {
+        font-size: 0.85rem;
+    }
+}
+
+/* Ensure form elements properly size with border-box */
+* {
+    box-sizing: border-box;
+}
+
+/* Improve form element width calculation */
+.form-group {
+    width: 100%;
+}
+
+/* Fix for select dropdown arrow positioning */
+.form-group select {
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+/* Better spacing for delivery options on small screens */
+@media (max-width: 480px) {
+    .delivery-selector {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .method-option {
+        width: 100%;
+        justify-content: flex-start;
+    }
+    
+    .selected-method {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

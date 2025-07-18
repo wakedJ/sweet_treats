@@ -13,21 +13,24 @@ if (!isset($conn) && file_exists('includes/db.php')) {
 $cart_count = 0;
 
 // Get cart count based on user status
-if (isset($_SESSION['user_id']) && isset($conn)) {
-    // For logged-in users, get count from database
+if (isset($_SESSION['user_id'])) {
+    // User is logged in, get count from database
     $user_id = $_SESSION['user_id'];
-    $count_query = "SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?";
-    $stmt = $conn->prepare($count_query);
-    $stmt->bind_param("i", $user_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-    $cart_count = $row['total'] ? intval($row['total']) : 0;
-} else if (isset($_SESSION['cart'])) {
-    // For guest users, count from session
+    $cart_query = "SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?";
+    $cart_stmt = $conn->prepare($cart_query);
+    $cart_stmt->bind_param("i", $user_id);
+    $cart_stmt->execute();
+    $cart_result = $cart_stmt->get_result();
+    $cart_row = $cart_result->fetch_assoc();
+    $cart_count = $cart_row['total'] ?: 0;
+} else if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+    // User is a guest, get count from session
     foreach ($_SESSION['cart'] as $item) {
         $cart_count += $item['quantity'];
     }
+} else {
+    // Either no items in cart or use stored cart count
+    $cart_count = isset($_SESSION['cart_count']) ? $_SESSION['cart_count'] : 0;
 }
 ?>
 <div class="announcement-bar">
@@ -35,6 +38,8 @@ if (isset($_SESSION['user_id']) && isset($conn)) {
 </div>
 
 <header id="mainHeader">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
     <div class="logo">
         <a href="index.php"><h1>Sweet Treats</h1></a>
     </div>
@@ -50,34 +55,9 @@ if (isset($_SESSION['user_id']) && isset($conn)) {
             <i class="fas fa-shopping-cart"></i>
             <span class="cart-count"><?php echo $cart_count; ?></span>
         </a>
-        <a href="<?php echo isset($_SESSION['user_id']) ? 'account.php' : 'login.php'; ?>" class="profile-icon">
-            <i class="fas fa-user"></i>
-        </a>
+        <a href="account.php" class="profile-icon">
+    <i class="fas fa-user"></i>
+</a>
+
     </div>
 </header>
-<style>
-    .cart-icon {
-    position: relative;
-}
-
-.cart-count {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background-color: #ff6b6b;
-    color: white;
-    border-radius: 50%;
-    min-width: 18px;
-    height: 18px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 2px;
-}
-
-/* Hide the cart count if it's zero */
-.cart-count:empty {
-    display: none;
-}
-</style>

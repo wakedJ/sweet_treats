@@ -1,3 +1,4 @@
+<? require_once './includes/check_admin.php'; ?>
 <h3>Top Banner Management</h3>
                 <div class="status-message success" style="display: none;">Changes saved successfully!</div>
                 <div class="status-message error" style="display: none;">Error saving changes. Please try again.</div>
@@ -20,10 +21,7 @@
                         <div class="error-message" id="banner-text-error"></div>
                     </div>
                     
-                    <div class="form-row">
-                        <label for="discount-code">Discount Code</label>
-                        <input type="text" id="discount-code" placeholder="Enter discount code">
-                    </div>
+                   
                     
                     <div class="form-row">
                         <label for="banner-text-color">Text Color</label>

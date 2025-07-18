@@ -1,33 +1,72 @@
 <?php
+session_start(); // Start session
+
+$developer_mode = isset($_GET['dev_mode']) && $_GET['dev_mode'] == '1';
+
+// Include required files
+include "includes/db.php";
+include "includes/cart_functions.php"; // Include cart functions
+// Fix the path to email_functions.php - ensure it's properly included
+if (file_exists("includes/email_functions.php")) {
+    include "includes/email_functions.php"; // Include our email functions file
+} else {
+    error_log("Email functions file not found at: includes/email_functions.php");
+}
+
+// Add email system test if in developer mode
+if ($developer_mode && isset($_GET['test_email'])) {
+    // Make sure email_functions are loaded before testing
+    if (!function_exists('testEmailConnection')) {
+        die("Error: Email functions are not properly loaded. Check file paths.");
+    }
+    
+    $test_result = testEmailConnection();
+    echo "<div style='background: #f8f9fa; padding: 20px; margin: 20px; border: 1px solid #ddd; border-radius: 5px;'>";
+    echo "<h2>Email System Test Results</h2>";
+    echo "<p>Success: " . ($test_result['success'] ? 'Yes' : 'No') . "</p>";
+    echo "<p>Message: " . htmlspecialchars($test_result['message']) . "</p>";
+    echo "<p>API Info: " . htmlspecialchars($test_result['api_info']) . "</p>";
+    echo "<p>Sender: " . htmlspecialchars($test_result['sender']) . "</p>";
+    echo "</div>";
+    
+    if (!$test_result['success']) {
+        echo "<div style='background: #f8d7da; color: #721c24; padding: 20px; margin: 20px; border: 1px solid #f5c6cb; border-radius: 5px;'>";
+        echo "<h3>Troubleshooting Tips</h3>";
+        echo "<ul>";
+        echo "<li>Check if your API key is complete and correct</li>";
+        echo "<li>Verify that your sender email is verified in Brevo</li>";
+        echo "<li>Check server error logs for more details</li>";
+        echo "<li>Make sure your server can make outbound HTTPS connections</li>";
+        echo "</ul>";
+        echo "</div>";
+    }
+}
 
 if (!file_exists('vendor/autoload.php')) {
     die("Error: PHPMailer is not installed. Please run 'composer require phpmailer/phpmailer'");
 }
 
-include "includes/db.php";
-
 // Clean up expired temporary users
 $cleanup_query = "DELETE FROM temp_users WHERE expiry_datetime < NOW()";
 $conn->query($cleanup_query);
-// Add PHPMailer classes
-use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\Exception;
 
 // Initialize error message variable
 $error_message = "";
 $success_message = "";
+$registration_successful = false;
 
 // Check if form was submitted
 if (isset($_POST['register'])) {
-    // Get form data
-    $full_name = trim($_POST['full_name']);
+    // Get form data - Split full name into first and last name
+    $first_name = trim($_POST['first_name']);
+    $last_name = trim($_POST['last_name']);
     $phone_number = trim($_POST['phone_number']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
     $confirm_password = $_POST['confirm_password'];
     
     // Basic validation
-    if (empty($full_name) || empty($phone_number) || empty($email) || empty($password)) {
+    if (empty($first_name) || empty($last_name) || empty($phone_number) || empty($email) || empty($password)) {
         $error_message = "All fields are required.";
     } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $error_message = "Please enter a valid email address.";
@@ -85,75 +124,70 @@ if (isset($_POST['register'])) {
             
             // Only proceed if the email doesn't exist in either table
             if (!$user_exists && !$temp_user_exists) {
-                // Generate verification token
-                $verification_token = bin2hex(random_bytes(32));
-                $expiry_datetime = date('Y-m-d H:i:s', strtotime('+24 hours'));
+                // Generate 6-digit verification code instead of token
+                $verification_code = generateVerificationCode();
+                
+                // Set expiry to 30 minutes from now (for verification code)
+                $expiry_datetime = date('Y-m-d H:i:s', strtotime('+30 minutes'));
                 
                 // Hash the password
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
-                // Insert into temp_users table
-                $insert_query = "INSERT INTO temp_users (email, full_name, password, verification_token, expiry_datetime, phone_number) 
-                VALUES (?, ?, ?, ?, ?, ?)";
+                // Store verification code in database instead of token
+                $insert_query = "INSERT INTO temp_users (email, first_name, last_name, password, verification_token, expiry_datetime, phone_number, created_at) 
+                VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
                 $insert_stmt = $conn->prepare($insert_query);
                 
                 if (!$insert_stmt) {
                     throw new Exception("Prepare failed for insert: " . $conn->error);
                 }
                 
-                $insert_stmt->bind_param("ssssss", $email, $full_name, $hashed_password, $verification_token, $expiry_datetime, $phone_number);
+                // Use verification_code in place of verification_token
+                $insert_stmt->bind_param("sssssss", $email, $first_name, $last_name, $hashed_password, $verification_code, $expiry_datetime, $phone_number);
                 
                 if ($insert_stmt->execute()) {
-                    // Generate verification URL - Create a more reliable URL
-                    // Get the current URL path components
-                    $base_url = '';
-                    if (isset($_SERVER['HTTP_HOST'])) {
-                        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
-                        $base_url = $protocol . '://' . $_SERVER['HTTP_HOST'];
+                    $registration_successful = true;
+                    $user_id = $insert_stmt->insert_id;
+                    
+                    // Store email and code in session for verification process
+                    $_SESSION['verification_email'] = $email;
+                    $_SESSION['verification_code_sent'] = true;
+                    
+                    // Check if sendVerificationEmail function exists
+                    if (!function_exists('sendVerificationEmail')) {
+                        error_log("sendVerificationEmail function not found - check if email_functions.php is properly included");
+                        $success_message = "Registration successful! However, email verification is not available. Your verification code is: <strong>" . $verification_code . "</strong>";
                     } else {
-                        $base_url = 'http://localhost'; // Fallback for CLI
-                    }
-                    
-                    // Get the directory path
-                    $script_name = isset($_SERVER['SCRIPT_NAME']) ? $_SERVER['SCRIPT_NAME'] : '';
-                    $directory = dirname($script_name);
-                    // If it's the root directory, set to empty string
-                    if ($directory == '/' || $directory == '\\') {
-                        $directory = '';
-                    }
-                    
-                    $verification_url = $base_url . $directory . '/verify.php?token=' . $verification_token;
-                    
-                    // Add a direct verification link that will always display for testing
-                    $direct_verification_link = '<a href="verify.php?token=' . $verification_token . '">Direct Verification Link</a>';
-                    
-                    // Special handling for LIU email addresses
-                    if (strpos($email, '@students.liu.edu.lb') !== false || strpos($email, 'liu.edu.lb') !== false) {
-                        // For LIU students, show direct link without sending email
-                        $success_message = "Registration successful! For LIU students, please use this direct link to verify your account: <a href='verify.php?token=" . $verification_token . "'>Verify Account</a>";
-                        error_log("LIU domain detected. Provided direct verification link instead of sending email.");
-                    } else {
-                        // Regular email process for non-LIU addresses
+                        // Send verification email using our function - now with code instead of URL
                         try {
-                            $emailSent = sendVerificationEmail($email, $full_name, $verification_token, $verification_url);
+                            $full_name = $first_name . ' ' . $last_name; // Combine for email purposes
+                            $emailSent = sendVerificationEmail($email, $full_name, $verification_code);
                             
                             if ($emailSent) {
-                                $success_message = "Registration successful! Please check your email to verify your account.<br><br>If you don't receive the email, you can use this direct link: " . $direct_verification_link;
+                                $success_message = "Registration successful! We've sent a 6-digit verification code to your email address.<br><br>";
+                                $success_message .= "<div style='background: #e8f4fd; border: 1px solid #bee5eb; color: #0c5460; padding: 15px; border-radius: 5px; margin: 10px 0;'>";
+                                $success_message .= "<strong>Next Step:</strong> Check your email and <a href='verify_code.php' style='color: #0c5460; font-weight: bold;'>click here to enter your verification code</a>.";
+                                $success_message .= "</div>";
+                                $success_message .= "<small>The code will expire in 30 minutes. If you don't receive the email, check your spam folder.</small>";
                             } else {
-                                // Try a simplified test email
-                                $testEmailSent = debugEmailSending($email, $full_name, $verification_token, $verification_url);
+                                $success_message = "Registration successful! However, there was an issue sending the verification email. Your verification code is: <strong>" . $verification_code . "</strong><br>";
+                                $success_message .= "<a href='verify_code.php'>Click here to enter your verification code</a>";
+                                error_log("Failed to send verification email to: " . $email);
+                            }
+                            
+                            // Transfer any items in session cart to the new temp user
+                            if (isset($_SESSION['cart']) && !empty($_SESSION['cart'])) {
+                                $transfer_result = transfer_session_cart_to_db($conn, $user_id, 'temp_user');
                                 
-                                if ($testEmailSent) {
-                                    $success_message = "Registration successful! Email test worked but verification email may have issues. You can use this direct link: " . $direct_verification_link;
-                                } else {
-                                    // Email sending failed
-                                    error_log("Email sending failed to: " . $email);
-                                    $success_message = "Registration successful! However, there was an issue sending the verification email. You can use this direct link: " . $direct_verification_link;
+                                if (!$transfer_result) {
+                                    // Log error but don't show to user
+                                    error_log("Failed to transfer cart for new temp user ID: $user_id");
                                 }
                             }
                         } catch (Exception $e) {
                             error_log("Email Exception: " . $e->getMessage());
-                            $success_message = "Registration successful! But verification email could not be sent. You can use this direct link: " . $direct_verification_link;
+                            $success_message = "Registration successful! However, verification email could not be sent. Your verification code is: <strong>" . $verification_code . "</strong><br>";
+                            $success_message .= "<a href='verify_code.php'>Click here to enter your verification code</a>";
                         }
                     }
                 } else {
@@ -168,222 +202,19 @@ if (isset($_POST['register'])) {
     }
 }
 
-// Function to send verification email with improved debugging
-function sendVerificationEmail($email, $name, $token, $verification_url) {
-    // Log the attempt
-    error_log("Sending verification email to: " . $email);
-    
-    // Special handling for LIU domains - skip actual sending
-    if (strpos($email, 'liu.edu.lb') !== false) {
-        error_log("LIU domain detected in sendVerificationEmail - skipping actual email sending");
-        return true; // Return true to indicate "success" without sending
-    }
-    
-    require 'vendor/autoload.php';
-    
-    $mail = new PHPMailer(true);
-    
-    try {
-        // Server settings
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'lanawaked237@gmail.com';
-        $mail->Password   = 'nkuu slol muzq wmun'; // Check if this is still valid
-        $mail->SMTPSecure = 'tls';
-        $mail->Port       = 587;
-        
-        // Add this for better compatibility with all domains
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        );
-        
-        // Enhanced debug for specific domains
-        if (strpos($email, '.lb') !== false) {
-            error_log("Special handling for .lb domain: $email");
-            $mail->SMTPDebug = 3; // More verbose debugging for .lb addresses 
-        } else {
-            $mail->SMTPDebug = 2;
-        }
-        
-        // Increase timeout values for slower connections
-        $mail->Timeout = 120; // seconds
-        
-        $mail->Debugoutput = function($str, $level) {
-            error_log("PHPMailer: $str");
-        };
-        
-        // Recipients
-        $mail->setFrom('lanawaked237@gmail.com', 'Sweet Treats');
-        $mail->addAddress($email, $name);
-        
-        // Content
-        $mail->isHTML(true);
-        $mail->Subject = 'Verify Your Sweet Treats Account';
-        
-        // Email body with HTML styling that matches your site's theme
-        $mail->Body = '
-        <html>
-        <head>
-            <style>
-                body {
-                    font-family: Arial, sans-serif;
-                    line-height: 1.6;
-                    color: #333;
-                }
-                .container {
-                    max-width: 600px;
-                    margin: 0 auto;
-                    padding: 20px;
-                    border: 1px solid #ddd;
-                    border-radius: 5px;
-                }
-                .header {
-                    text-align: center;
-                    padding: 10px;
-                    background-color: #FFF0F5;
-                    color: #FF69B4;
-                    border-radius: 5px 5px 0 0;
-                }
-                .content {
-                    padding: 20px;
-                }
-                .button {
-                    display: inline-block;
-                    padding: 10px 20px;
-                    background-color: #FF69B4;
-                    color: white !important;
-                    text-decoration: none;
-                    border-radius: 5px;
-                    margin: 20px 0;
-                }
-                .footer {
-                    text-align: center;
-                    padding: 10px;
-                    font-size: 12px;
-                    color: #777;
-                }
-            </style>
-        </head>
-        <body>
-            <div class="container">
-                <div class="header">
-                    <h1>Sweet Treats</h1>
-                </div>
-                <div class="content">
-                    <h2>Welcome, ' . htmlspecialchars($name) . '!</h2>
-                    <p>Thank you for registering at Sweet Treats. To activate your account, please verify your email address by clicking the button below:</p>
-                    <p style="text-align: center;">
-                        <a href="' . $verification_url . '" class="button">Verify Email Address</a>
-                    </p>
-                    <p>If the button doesn\'t work, copy and paste this link into your browser:</p>
-                    <p>' . $verification_url . '</p>
-                    <p>This link will expire in 24 hours.</p>
-                </div>
-                <div class="footer">
-                    <p>&copy; ' . date('Y') . ' Sweet Treats. All rights reserved.</p>
-                    <p>If you didn\'t create this account, you can safely ignore this email.</p>
-                </div>
-            </div>
-        </body>
-        </html>';
-        
-        $mail->AltBody = 'Welcome to Sweet Treats! Please verify your email by clicking this link: ' . $verification_url . "\n\nThis link will expire in 24 hours.";
-        
-        // Add priority settings to help with delivery
-        $mail->Priority = 1; // Highest priority
-        $mail->addCustomHeader('X-MSMail-Priority', 'High');
-        $mail->addCustomHeader('Importance', 'High');
-        
-        $result = $mail->send();
-        error_log("Email sent: " . ($result ? "Yes" : "No") . " to " . $email);
-        return $result;
-    } catch (Exception $e) {
-        error_log("Mailer Error: " . $mail->ErrorInfo);
-        error_log("Exception Details: " . $e->getMessage());
+// Function to check if Brevo is properly configured
+function checkBrevoConfig() {
+    if (!defined('BREVO_API_KEY') || !defined('BREVO_SENDER_EMAIL')) {
         return false;
     }
-}
-
-// Debug function to test email sending with minimal content
-function debugEmailSending($email, $name, $token, $verification_url) {
-    // Special handling for LIU domains - skip actual sending
-    if (strpos($email, 'liu.edu.lb') !== false) {
-        error_log("LIU domain detected in debugEmailSending - skipping actual email sending");
-        return true; // Return true to indicate "success" without sending
-    }
     
-    // First, log that we're attempting to send an email
-    error_log("Attempting to send test email to: " . $email);
-    
-    require 'vendor/autoload.php';
-    
-    $mail = new PHPMailer(true);
-    
-    try {
-        // Enable verbose debug output
-        if (strpos($email, '.lb') !== false) {
-            error_log("Test email for .lb domain: $email");
-            $mail->SMTPDebug = 3; // More verbose debugging for .lb addresses
-        } else {
-            $mail->SMTPDebug = 2;
-        }
-        
-        $mail->Debugoutput = function($str, $level) {
-            error_log("PHPMailer Debug: $str");
-        };
-        
-        // Server settings
-        $mail->isSMTP();
-        $mail->Host       = 'smtp.gmail.com';
-        $mail->SMTPAuth   = true;
-        $mail->Username   = 'lanawaked237@gmail.com';
-        $mail->Password   = 'nkuu slol muzq wmun'; // Check if app password is still valid
-        $mail->SMTPSecure = 'tls';
-        $mail->Port       = 587;
-        
-        // Add improved SSL options
-        $mail->SMTPOptions = array(
-            'ssl' => array(
-                'verify_peer' => false,
-                'verify_peer_name' => false,
-                'allow_self_signed' => true
-            )
-        );
-        
-        // Set timeouts to give enough time for connection
-        $mail->Timeout = 120; // increased from 60 seconds
-        $mail->SMTPKeepAlive = true; // Keep the SMTP connection open
-        
-        // Recipients
-        $mail->setFrom('lanawaked237@gmail.com', 'Sweet Treats');
-        $mail->addAddress($email, $name);
-        
-        // Simple test content
-        $mail->isHTML(true);
-        $mail->Subject = 'Sweet Treats - Email Test';
-        
-        $mail->Body    = 'This is a test email to verify your email functionality is working. <br><br>Your verification link is: <a href="' . $verification_url . '">Click here to verify</a>';
-        $mail->AltBody = 'This is a test email. Your verification link is: ' . $verification_url;
-        
-        // Add priority settings to help with .lb domains
-        $mail->Priority = 1; // Highest priority
-        $mail->addCustomHeader('X-MSMail-Priority', 'High');
-        $mail->addCustomHeader('Importance', 'High');
-        
-        // Send the email
-        $result = $mail->send();
-        error_log("Email send result: " . ($result ? "SUCCESS" : "FAILURE") . " to " . $email);
-        return $result;
-    } catch (Exception $e) {
-        error_log("TEST Mailer Error: " . $mail->ErrorInfo);
-        error_log("TEST Exception Details: " . $e->getMessage());
+    // Check if API key looks valid (should start with "xkeysib-")
+    if (!preg_match('/^xkeysib-[a-zA-Z0-9-]+$/', BREVO_API_KEY) || 
+        BREVO_API_KEY == 'xkeysib-your-full-brevo-api-key-goes-here') {
         return false;
     }
+    
+    return true;
 }
 ?>
 
@@ -392,73 +223,10 @@ function debugEmailSending($email, $name, $token, $verification_url) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sweet Treats</title>
+    <title>Register - Sweet Treats</title>
     <!-- Font Awesome CDN for ice cream icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #FFF0F5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 350px;
-            padding: 30px;
-        }
-        .logo {
-            color: #FF69B4;
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .logo i {
-            color: #FF69B4;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .sign-in-link {
-            text-align: center;
-            margin-top: 15px;
-            color: #333;
-        }
-        .sign-in-link a {
-            color: #FF69B4;
-            text-decoration: none;
-        }
-        .success-message {
-            background-color: #d4edda;
-            color: #155724;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .error-message {
-            background-color: #f8d7da;
-            color: #721c24;
-            padding: 10px;
-            border-radius: 5px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="css/register.css">
 </head>
 <body>
     <!-- Registration Form -->
@@ -478,20 +246,37 @@ function debugEmailSending($email, $name, $token, $verification_url) {
             <div class="success-message">
                 <?php echo $success_message; ?>
             </div>
-        <?php endif; ?>
-
-        <form method="post" action="">
-            <input type="text" name="full_name" placeholder="full name" required value="<?php echo isset($_POST['full_name']) ? htmlspecialchars($_POST['full_name']) : ''; ?>">
-            <input type="tel" name="phone_number" placeholder="phone number" required value="<?php echo isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : ''; ?>">
-            <input type="email" name="email" placeholder="email address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
-            <input type="password" name="password" placeholder="password" required>
-            <input type="password" name="confirm_password" placeholder="confirm password" required>
-            <input type="submit" name="register" value="Register" style="background-color: #FF69B4; color: white; border: none; cursor: pointer;">
+        <?php else: ?>
+            <form method="post" action="">
+                <div class="name-fields">
+                    <input type="text" name="first_name" placeholder="First name" required value="<?php echo isset($_POST['first_name']) ? htmlspecialchars($_POST['first_name']) : ''; ?>">
+                    <input type="text" name="last_name" placeholder="Last name" required value="<?php echo isset($_POST['last_name']) ? htmlspecialchars($_POST['last_name']) : ''; ?>">
+                </div>
+                <input type="tel" name="phone_number" placeholder="Phone number" required value="<?php echo isset($_POST['phone_number']) ? htmlspecialchars($_POST['phone_number']) : ''; ?>">
+                <input type="email" name="email" placeholder="Email address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirm_password" placeholder="Confirm password" required>
+                <input type="submit" name="register" value="Register">
+                
+                <div class="sign-in-link">
+                    Already a customer? <a href="login.php">Sign in here</a>
+                </div>
+            </form>
             
-            <div class="sign-in-link">
-                Already a customer? <a href="login.php">Sign in here</a>
-            </div>
-        </form>
+            <?php if ($developer_mode): ?>
+                <div class="dev-info">
+                    <p><strong>Developer Info:</strong></p>
+                    <p>Email Functions Loaded: <?php echo function_exists('sendVerificationEmail') ? 'Yes' : 'No'; ?></p>
+                    <p>Code Generation Function: <?php echo function_exists('generateVerificationCode') ? 'Yes' : 'No'; ?></p>
+                    <p>Brevo Properly Configured: <?php echo checkBrevoConfig() ? 'Yes' : 'No'; ?></p>
+                    <p><a href="?dev_mode=1&test_email=1">Run Email Test</a></p>
+                </div>
+            <?php endif; ?>
+        <?php endif; ?>
+        
+        <div class="home-link">
+            <a href="index.php">← Back to Home</a>
+        </div>
     </div>
 </body>
 </html>

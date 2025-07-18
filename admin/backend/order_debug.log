@@ -1,0 +1,1329 @@
+[2025-05-09 09:15:56] get_orders.php started
+[2025-05-09 09:15:56] DB file exists, attempting to include
+[2025-05-09 09:15:56] Database connection successful
+[2025-05-09 09:15:56] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:15:56] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:15:56] Using 'id' as customer name column
+[2025-05-09 09:15:56] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:15:56] Query successful, found 9 orders
+[2025-05-09 09:15:56] Returning 9 orders
+[2025-05-09 09:15:59] get_orders.php started
+[2025-05-09 09:15:59] DB file exists, attempting to include
+[2025-05-09 09:15:59] Database connection successful
+[2025-05-09 09:15:59] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:15:59] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:15:59] Using 'id' as customer name column
+[2025-05-09 09:15:59] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:15:59] Query successful, found 9 orders
+[2025-05-09 09:15:59] Returning 9 orders
+[2025-05-09 09:19:26] get_orders.php started
+[2025-05-09 09:19:26] DB file exists, attempting to include
+[2025-05-09 09:19:26] Database connection successful
+[2025-05-09 09:19:26] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:19:26] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:19:26] Using 'id' as customer name column
+[2025-05-09 09:19:26] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:19:26] Query successful, found 9 orders
+[2025-05-09 09:19:26] Returning 9 orders
+[2025-05-09 09:28:58] get_orders.php started
+[2025-05-09 09:28:58] DB file exists, attempting to include
+[2025-05-09 09:28:58] Database connection successful
+[2025-05-09 09:28:59] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:28:59] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:28:59] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 09:28:59] Using 'id' as customer name column
+[2025-05-09 09:28:59] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:28:59] Query successful, found 9 orders
+[2025-05-09 09:28:59] Returning 9 orders
+[2025-05-09 09:29:03] get_orders.php started
+[2025-05-09 09:29:03] DB file exists, attempting to include
+[2025-05-09 09:29:03] Database connection successful
+[2025-05-09 09:29:03] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:29:03] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:29:03] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 09:29:03] Using 'id' as customer name column
+[2025-05-09 09:29:03] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:29:03] Query successful, found 9 orders
+[2025-05-09 09:29:03] Returning 9 orders
+[2025-05-09 09:29:11] get_orders.php started
+[2025-05-09 09:29:11] DB file exists, attempting to include
+[2025-05-09 09:29:11] Database connection successful
+[2025-05-09 09:29:11] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:29:11] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:29:11] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 09:29:11] Using 'id' as customer name column
+[2025-05-09 09:29:11] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:29:11] Query successful, found 9 orders
+[2025-05-09 09:29:11] Returning 9 orders
+[2025-05-09 09:40:34] get_orders.php started
+[2025-05-09 09:40:34] DB file exists, attempting to include
+[2025-05-09 09:40:34] Database connection successful
+[2025-05-09 09:40:34] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:40:34] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:40:34] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 09:40:34] Using 'id' as customer name column
+[2025-05-09 09:40:34] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:40:34] Query successful, found 9 orders
+[2025-05-09 09:40:34] Returning 9 orders
+[2025-05-09 09:40:42] get_orders.php started
+[2025-05-09 09:40:42] DB file exists, attempting to include
+[2025-05-09 09:40:42] Database connection successful
+[2025-05-09 09:40:42] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:40:42] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:40:42] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 09:40:42] Using 'id' as customer name column
+[2025-05-09 09:40:42] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:40:42] Query successful, found 9 orders
+[2025-05-09 09:40:42] Returning 9 orders
+[2025-05-09 09:41:14] get_orders.php started
+[2025-05-09 09:41:14] DB file exists, attempting to include
+[2025-05-09 09:41:14] Database connection successful
+[2025-05-09 09:41:14] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 09:41:14] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 09:41:14] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 09:41:14] Using 'id' as customer name column
+[2025-05-09 09:41:14] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 09:41:14] Query successful, found 9 orders
+[2025-05-09 09:41:14] Returning 9 orders
+[2025-05-09 17:15:26] get_orders.php started
+[2025-05-09 17:15:26] DB file exists, attempting to include
+[2025-05-09 17:15:26] Database connection successful
+[2025-05-09 17:15:26] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 17:15:26] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 17:15:26] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 17:15:26] Using 'id' as customer name column
+[2025-05-09 17:15:26] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 17:15:26] Query successful, found 9 orders
+[2025-05-09 17:15:26] Returning 9 orders
+[2025-05-09 17:18:23] get_orders.php started
+[2025-05-09 17:18:23] DB file exists, attempting to include
+[2025-05-09 17:18:23] Database connection successful
+[2025-05-09 17:18:23] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 17:18:23] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 17:18:23] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 17:18:23] Using 'id' as customer name column
+[2025-05-09 17:18:23] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 17:18:23] Query successful, found 9 orders
+[2025-05-09 17:18:23] Returning 9 orders
+[2025-05-09 17:26:16] get_orders.php started
+[2025-05-09 17:26:16] DB file exists, attempting to include
+[2025-05-09 17:26:16] Database connection successful
+[2025-05-09 17:26:16] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 17:26:16] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 17:26:16] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 17:26:16] Using 'id' as customer name column
+[2025-05-09 17:26:16] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 17:26:16] Query successful, found 9 orders
+[2025-05-09 17:26:16] Returning 9 orders
+[2025-05-09 17:51:14] get_orders.php started
+[2025-05-09 17:51:14] DB file exists, attempting to include
+[2025-05-09 17:51:14] Database connection successful
+[2025-05-09 17:51:14] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 17:51:14] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 17:51:14] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 17:51:14] Using 'id' as customer name column
+[2025-05-09 17:51:14] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 17:51:14] Query successful, found 9 orders
+[2025-05-09 17:51:14] Returning 9 orders
+[2025-05-09 18:37:52] get_orders.php started
+[2025-05-09 18:37:52] DB file exists, attempting to include
+[2025-05-09 18:37:52] Database connection successful
+[2025-05-09 18:37:52] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 18:37:52] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 18:37:52] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 18:37:52] Using 'id' as customer name column
+[2025-05-09 18:37:52] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 18:37:52] Query successful, found 9 orders
+[2025-05-09 18:37:52] Returning 9 orders
+[2025-05-09 18:39:51] get_orders.php started
+[2025-05-09 18:39:51] DB file exists, attempting to include
+[2025-05-09 18:39:51] Database connection successful
+[2025-05-09 18:39:51] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-09 18:39:51] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-09 18:39:51] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-09 18:39:51] Using 'id' as customer name column
+[2025-05-09 18:39:51] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-09 18:39:51] Query successful, found 9 orders
+[2025-05-09 18:39:51] Returning 9 orders
+[2025-05-10 07:41:02] get_orders.php started
+[2025-05-10 07:41:02] DB file exists, attempting to include
+[2025-05-10 07:41:02] Database connection successful
+[2025-05-10 07:41:02] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 07:41:02] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 07:41:02] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 07:41:02] Using 'id' as customer name column
+[2025-05-10 07:41:02] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 07:41:02] Query successful, found 9 orders
+[2025-05-10 07:41:02] Returning 9 orders
+[2025-05-10 09:18:54] get_orders.php started
+[2025-05-10 09:18:54] DB file exists, attempting to include
+[2025-05-10 09:18:54] Database connection successful
+[2025-05-10 09:18:54] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 09:18:54] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 09:18:54] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 09:18:54] Using 'id' as customer name column
+[2025-05-10 09:18:54] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 09:18:54] Query successful, found 18 orders
+[2025-05-10 09:18:54] Returning 18 orders
+[2025-05-10 09:30:47] get_orders.php started
+[2025-05-10 09:30:47] DB file exists, attempting to include
+[2025-05-10 09:30:47] Database connection successful
+[2025-05-10 09:30:47] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 09:30:47] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 09:30:47] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 09:30:47] Using 'id' as customer name column
+[2025-05-10 09:30:47] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 09:30:47] Query successful, found 21 orders
+[2025-05-10 09:30:47] Returning 21 orders
+[2025-05-10 09:58:20] get_orders.php started
+[2025-05-10 09:58:20] DB file exists, attempting to include
+[2025-05-10 09:58:20] Database connection successful
+[2025-05-10 09:58:20] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 09:58:20] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 09:58:20] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 09:58:20] Using 'id' as customer name column
+[2025-05-10 09:58:20] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 09:58:20] Query successful, found 21 orders
+[2025-05-10 09:58:20] Returning 21 orders
+[2025-05-10 10:41:07] get_orders.php started
+[2025-05-10 10:41:07] DB file exists, attempting to include
+[2025-05-10 10:41:07] Database connection successful
+[2025-05-10 10:41:07] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 10:41:07] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 10:41:07] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 10:41:07] Using 'id' as customer name column
+[2025-05-10 10:41:07] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 10:41:07] Query successful, found 21 orders
+[2025-05-10 10:41:07] Returning 21 orders
+[2025-05-10 10:46:21] get_orders.php started
+[2025-05-10 10:46:21] DB file exists, attempting to include
+[2025-05-10 10:46:21] Database connection successful
+[2025-05-10 10:46:21] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 10:46:21] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 10:46:21] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 10:46:21] Using 'id' as customer name column
+[2025-05-10 10:46:21] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 10:46:21] Query successful, found 21 orders
+[2025-05-10 10:46:21] Returning 21 orders
+[2025-05-10 10:46:34] get_orders.php started
+[2025-05-10 10:46:34] DB file exists, attempting to include
+[2025-05-10 10:46:34] Database connection successful
+[2025-05-10 10:46:34] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 10:46:34] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 10:46:34] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 10:46:34] Using 'id' as customer name column
+[2025-05-10 10:46:34] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 10:46:34] Query successful, found 21 orders
+[2025-05-10 10:46:34] Returning 21 orders
+[2025-05-10 10:48:59] get_orders.php started
+[2025-05-10 10:48:59] DB file exists, attempting to include
+[2025-05-10 10:48:59] Database connection successful
+[2025-05-10 10:48:59] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 10:48:59] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 10:48:59] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 10:48:59] Using 'id' as customer name column
+[2025-05-10 10:48:59] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 10:48:59] Query successful, found 21 orders
+[2025-05-10 10:48:59] Returning 21 orders
+[2025-05-10 11:24:39] get_orders.php started
+[2025-05-10 11:24:39] DB file exists, attempting to include
+[2025-05-10 11:24:39] Database connection successful
+[2025-05-10 11:24:39] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 11:24:39] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 11:24:39] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 11:24:39] Using 'id' as customer name column
+[2025-05-10 11:24:39] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 11:24:39] Query successful, found 21 orders
+[2025-05-10 11:24:39] Returning 21 orders
+[2025-05-10 11:28:57] get_orders.php started
+[2025-05-10 11:28:57] DB file exists, attempting to include
+[2025-05-10 11:28:57] Database connection successful
+[2025-05-10 11:28:57] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 11:28:57] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 11:28:57] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 11:28:57] Using 'id' as customer name column
+[2025-05-10 11:28:57] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 11:28:57] Query successful, found 21 orders
+[2025-05-10 11:28:57] Returning 21 orders
+[2025-05-10 13:31:13] get_orders.php started
+[2025-05-10 13:31:13] DB file exists, attempting to include
+[2025-05-10 13:31:13] Database connection successful
+[2025-05-10 13:31:13] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 13:31:13] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 13:31:13] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 13:31:13] Using 'id' as customer name column
+[2025-05-10 13:31:13] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 13:31:14] Query successful, found 21 orders
+[2025-05-10 13:31:14] Returning 21 orders
+[2025-05-10 15:07:38] get_orders.php started
+[2025-05-10 15:07:38] DB file exists, attempting to include
+[2025-05-10 15:07:38] Database connection successful
+[2025-05-10 15:07:38] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 15:07:38] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 15:07:38] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 15:07:38] Using 'id' as customer name column
+[2025-05-10 15:07:38] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 15:07:38] Query successful, found 21 orders
+[2025-05-10 15:07:38] Returning 21 orders
+[2025-05-10 19:54:11] get_orders.php started
+[2025-05-10 19:54:11] DB file exists, attempting to include
+[2025-05-10 19:54:11] Database connection successful
+[2025-05-10 19:54:11] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 19:54:11] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 19:54:11] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 19:54:11] Using 'id' as customer name column
+[2025-05-10 19:54:11] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 19:54:11] Query successful, found 21 orders
+[2025-05-10 19:54:11] Returning 21 orders
+[2025-05-10 20:03:23] get_orders.php started
+[2025-05-10 20:03:23] DB file exists, attempting to include
+[2025-05-10 20:03:23] Database connection successful
+[2025-05-10 20:03:23] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 20:03:23] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 20:03:23] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 20:03:23] Using 'id' as customer name column
+[2025-05-10 20:03:23] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 20:03:23] Query successful, found 21 orders
+[2025-05-10 20:03:23] Returning 21 orders
+[2025-05-10 20:11:49] get_orders.php started
+[2025-05-10 20:11:49] DB file exists, attempting to include
+[2025-05-10 20:11:49] Database connection successful
+[2025-05-10 20:11:49] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 20:11:49] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 20:11:49] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 20:11:49] Using 'id' as customer name column
+[2025-05-10 20:11:49] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 20:11:49] Query successful, found 21 orders
+[2025-05-10 20:11:49] Returning 21 orders
+[2025-05-10 21:31:39] get_orders.php started
+[2025-05-10 21:31:39] DB file exists, attempting to include
+[2025-05-10 21:31:39] Database connection successful
+[2025-05-10 21:31:39] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-10 21:31:39] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-10 21:31:39] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-10 21:31:39] Using 'id' as customer name column
+[2025-05-10 21:31:39] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-10 21:31:39] Query successful, found 21 orders
+[2025-05-10 21:31:39] Returning 21 orders
+[2025-05-11 17:29:46] get_orders.php started
+[2025-05-11 17:29:46] DB file exists, attempting to include
+[2025-05-11 17:29:46] Database connection successful
+[2025-05-11 17:29:46] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-11 17:29:46] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-11 17:29:46] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-11 17:29:46] Using 'id' as customer name column
+[2025-05-11 17:29:46] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-11 17:29:46] Query successful, found 21 orders
+[2025-05-11 17:29:46] Returning 21 orders
+[2025-05-11 17:34:21] get_orders.php started
+[2025-05-11 17:34:21] DB file exists, attempting to include
+[2025-05-11 17:34:21] Database connection successful
+[2025-05-11 17:34:21] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-11 17:34:21] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-11 17:34:21] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-11 17:34:21] Using 'id' as customer name column
+[2025-05-11 17:34:21] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-11 17:34:21] Query successful, found 21 orders
+[2025-05-11 17:34:21] Returning 21 orders
+[2025-05-12 11:27:17] get_orders.php started
+[2025-05-12 11:27:17] DB file exists, attempting to include
+[2025-05-12 11:27:17] Database connection successful
+[2025-05-12 11:27:17] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-12 11:27:17] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-12 11:27:17] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-12 11:27:17] Using 'id' as customer name column
+[2025-05-12 11:27:17] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-12 11:27:17] Query successful, found 25 orders
+[2025-05-12 11:27:17] Returning 25 orders
+[2025-05-12 11:45:11] get_orders.php started
+[2025-05-12 11:45:11] DB file exists, attempting to include
+[2025-05-12 11:45:11] Database connection successful
+[2025-05-12 11:45:11] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-12 11:45:11] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-12 11:45:11] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-12 11:45:11] Using 'id' as customer name column
+[2025-05-12 11:45:11] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-12 11:45:11] Query successful, found 25 orders
+[2025-05-12 11:45:11] Returning 25 orders
+[2025-05-12 12:33:50] get_orders.php started
+[2025-05-12 12:33:50] DB file exists, attempting to include
+[2025-05-12 12:33:50] Database connection successful
+[2025-05-12 12:33:50] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-12 12:33:50] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-12 12:33:50] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-12 12:33:50] Using 'id' as customer name column
+[2025-05-12 12:33:50] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-12 12:33:50] Query successful, found 25 orders
+[2025-05-12 12:33:50] Returning 25 orders
+[2025-05-16 20:38:49] get_orders.php started
+[2025-05-16 20:38:49] DB file exists, attempting to include
+[2025-05-16 20:38:49] Database connection successful
+[2025-05-16 20:38:49] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-16 20:38:49] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-16 20:38:49] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-16 20:38:49] Using 'id' as customer name column
+[2025-05-16 20:38:49] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-16 20:38:49] Query successful, found 27 orders
+[2025-05-16 20:38:50] Returning 27 orders
+[2025-05-17 11:18:01] get_orders.php started
+[2025-05-17 11:18:01] DB file exists, attempting to include
+[2025-05-17 11:18:01] Database connection successful
+[2025-05-17 11:18:01] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-17 11:18:01] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-17 11:18:01] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-17 11:18:01] Using 'id' as customer name column
+[2025-05-17 11:18:01] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-17 11:18:01] Query successful, found 27 orders
+[2025-05-17 11:18:01] Returning 27 orders
+[2025-05-17 11:18:33] get_orders.php started
+[2025-05-17 11:18:33] DB file exists, attempting to include
+[2025-05-17 11:18:33] Database connection successful
+[2025-05-17 11:18:33] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-17 11:18:33] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-17 11:18:33] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-17 11:18:33] Using 'id' as customer name column
+[2025-05-17 11:18:33] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-17 11:18:33] Query successful, found 27 orders
+[2025-05-17 11:18:33] Returning 27 orders
+[2025-05-17 11:18:36] get_orders.php started
+[2025-05-17 11:18:36] DB file exists, attempting to include
+[2025-05-17 11:18:36] Database connection successful
+[2025-05-17 11:18:36] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-17 11:18:36] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-17 11:18:36] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-17 11:18:36] Using 'id' as customer name column
+[2025-05-17 11:18:36] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-17 11:18:36] Query successful, found 27 orders
+[2025-05-17 11:18:36] Returning 27 orders
+[2025-05-18 06:56:02] get_orders.php started
+[2025-05-18 06:56:02] DB file exists, attempting to include
+[2025-05-18 06:56:02] Database connection successful
+[2025-05-18 06:56:02] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 06:56:02] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 06:56:02] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 06:56:02] Using 'id' as customer name column
+[2025-05-18 06:56:02] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 06:56:02] Query successful, found 27 orders
+[2025-05-18 06:56:02] Returning 27 orders
+[2025-05-18 07:07:12] get_orders.php started
+[2025-05-18 07:07:12] DB file exists, attempting to include
+[2025-05-18 07:07:12] Database connection successful
+[2025-05-18 07:07:12] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 07:07:12] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 07:07:12] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 07:07:12] Using 'id' as customer name column
+[2025-05-18 07:07:12] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 07:07:12] Query successful, found 27 orders
+[2025-05-18 07:07:12] Returning 27 orders
+[2025-05-18 07:20:36] get_orders.php started
+[2025-05-18 07:20:36] DB file exists, attempting to include
+[2025-05-18 07:20:36] Database connection successful
+[2025-05-18 07:20:36] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 07:20:36] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 07:20:36] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 07:20:37] Using 'id' as customer name column
+[2025-05-18 07:20:37] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 07:20:37] Query successful, found 27 orders
+[2025-05-18 07:20:37] Returning 27 orders
+[2025-05-18 07:30:01] get_orders.php started
+[2025-05-18 07:30:01] DB file exists, attempting to include
+[2025-05-18 07:30:01] Database connection successful
+[2025-05-18 07:30:01] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 07:30:01] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 07:30:01] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 07:30:01] Using 'id' as customer name column
+[2025-05-18 07:30:01] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 07:30:01] Query successful, found 27 orders
+[2025-05-18 07:30:01] Returning 27 orders
+[2025-05-18 07:33:24] get_orders.php started
+[2025-05-18 07:33:24] DB file exists, attempting to include
+[2025-05-18 07:33:24] Database connection successful
+[2025-05-18 07:33:25] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 07:33:25] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 07:33:25] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 07:33:25] Using 'id' as customer name column
+[2025-05-18 07:33:25] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 07:33:25] Query successful, found 27 orders
+[2025-05-18 07:33:25] Returning 27 orders
+[2025-05-18 07:46:39] get_orders.php started
+[2025-05-18 07:46:39] DB file exists, attempting to include
+[2025-05-18 07:46:39] Database connection successful
+[2025-05-18 07:46:39] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 07:46:39] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 07:46:39] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 07:46:39] Using 'id' as customer name column
+[2025-05-18 07:46:39] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 07:46:39] Query successful, found 27 orders
+[2025-05-18 07:46:39] Returning 27 orders
+[2025-05-18 08:03:57] get_orders.php started
+[2025-05-18 08:03:57] DB file exists, attempting to include
+[2025-05-18 08:03:57] Database connection successful
+[2025-05-18 08:03:57] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:03:57] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:03:57] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:03:57] Using 'id' as customer name column
+[2025-05-18 08:03:57] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:03:57] Query successful, found 27 orders
+[2025-05-18 08:03:58] Returning 27 orders
+[2025-05-18 08:11:39] get_orders.php started
+[2025-05-18 08:11:39] DB file exists, attempting to include
+[2025-05-18 08:11:39] Database connection successful
+[2025-05-18 08:11:39] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:11:39] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:11:39] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:11:39] Using 'id' as customer name column
+[2025-05-18 08:11:39] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:11:39] Query successful, found 27 orders
+[2025-05-18 08:11:40] Returning 27 orders
+[2025-05-18 08:15:25] get_orders.php started
+[2025-05-18 08:15:25] DB file exists, attempting to include
+[2025-05-18 08:15:25] Database connection successful
+[2025-05-18 08:15:25] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:15:25] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:15:25] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:15:25] Using 'id' as customer name column
+[2025-05-18 08:15:25] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:15:25] Query successful, found 27 orders
+[2025-05-18 08:15:26] Returning 27 orders
+[2025-05-18 08:15:35] get_orders.php started
+[2025-05-18 08:15:35] DB file exists, attempting to include
+[2025-05-18 08:15:35] Database connection successful
+[2025-05-18 08:15:35] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:15:35] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:15:35] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:15:35] Using 'id' as customer name column
+[2025-05-18 08:15:35] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:15:35] Query successful, found 27 orders
+[2025-05-18 08:15:36] Returning 27 orders
+[2025-05-18 08:19:52] get_orders.php started
+[2025-05-18 08:19:52] DB file exists, attempting to include
+[2025-05-18 08:19:52] Database connection successful
+[2025-05-18 08:19:52] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:19:52] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:19:52] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:19:52] Using 'id' as customer name column
+[2025-05-18 08:19:52] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:19:52] Query successful, found 27 orders
+[2025-05-18 08:19:52] Returning 27 orders
+[2025-05-18 08:31:50] get_orders.php started
+[2025-05-18 08:31:50] DB file exists, attempting to include
+[2025-05-18 08:31:50] Database connection successful
+[2025-05-18 08:31:50] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:31:50] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:31:50] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:31:50] Using 'id' as customer name column
+[2025-05-18 08:31:50] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:31:50] Query successful, found 27 orders
+[2025-05-18 08:31:50] Returning 27 orders
+[2025-05-18 08:34:37] get_orders.php started
+[2025-05-18 08:34:37] DB file exists, attempting to include
+[2025-05-18 08:34:37] Database connection successful
+[2025-05-18 08:34:37] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:34:37] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:34:37] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:34:37] Using 'id' as customer name column
+[2025-05-18 08:34:37] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:34:37] Query successful, found 27 orders
+[2025-05-18 08:34:37] Returning 27 orders
+[2025-05-18 08:37:12] get_orders.php started
+[2025-05-18 08:37:12] DB file exists, attempting to include
+[2025-05-18 08:37:12] Database connection successful
+[2025-05-18 08:37:12] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:37:13] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:37:13] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:37:13] Using 'id' as customer name column
+[2025-05-18 08:37:13] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:37:13] Query successful, found 27 orders
+[2025-05-18 08:37:13] Returning 27 orders
+[2025-05-18 08:43:45] get_orders.php started
+[2025-05-18 08:43:45] DB file exists, attempting to include
+[2025-05-18 08:43:45] Database connection successful
+[2025-05-18 08:43:45] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:43:45] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:43:45] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:43:45] Using 'id' as customer name column
+[2025-05-18 08:43:45] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:43:45] Query successful, found 27 orders
+[2025-05-18 08:43:45] Returning 27 orders
+[2025-05-18 08:43:56] get_orders.php started
+[2025-05-18 08:43:56] DB file exists, attempting to include
+[2025-05-18 08:43:56] Database connection successful
+[2025-05-18 08:43:56] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:43:56] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:43:56] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:43:56] Using 'id' as customer name column
+[2025-05-18 08:43:56] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:43:56] Query successful, found 27 orders
+[2025-05-18 08:43:56] Returning 27 orders
+[2025-05-18 08:45:39] get_orders.php started
+[2025-05-18 08:45:39] DB file exists, attempting to include
+[2025-05-18 08:45:39] Database connection successful
+[2025-05-18 08:45:39] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:45:39] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:45:39] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:45:39] Using 'id' as customer name column
+[2025-05-18 08:45:39] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:45:39] Query successful, found 27 orders
+[2025-05-18 08:45:39] Returning 27 orders
+[2025-05-18 08:48:57] get_orders.php started
+[2025-05-18 08:48:57] DB file exists, attempting to include
+[2025-05-18 08:48:57] Database connection successful
+[2025-05-18 08:48:57] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:48:57] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:48:57] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:48:57] Using 'id' as customer name column
+[2025-05-18 08:48:57] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:48:57] Query successful, found 27 orders
+[2025-05-18 08:48:57] Returning 27 orders
+[2025-05-18 08:52:11] get_orders.php started
+[2025-05-18 08:52:11] DB file exists, attempting to include
+[2025-05-18 08:52:11] Database connection successful
+[2025-05-18 08:52:11] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:52:11] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:52:11] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:52:11] Using 'id' as customer name column
+[2025-05-18 08:52:11] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:52:11] Query successful, found 27 orders
+[2025-05-18 08:52:11] Returning 27 orders
+[2025-05-18 08:52:21] get_orders.php started
+[2025-05-18 08:52:21] DB file exists, attempting to include
+[2025-05-18 08:52:21] Database connection successful
+[2025-05-18 08:52:21] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:52:21] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:52:21] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:52:21] Using 'id' as customer name column
+[2025-05-18 08:52:21] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:52:21] Query successful, found 27 orders
+[2025-05-18 08:52:21] Returning 27 orders
+[2025-05-18 08:52:23] get_orders.php started
+[2025-05-18 08:52:23] DB file exists, attempting to include
+[2025-05-18 08:52:23] Database connection successful
+[2025-05-18 08:52:23] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:52:23] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:52:23] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:52:23] Using 'id' as customer name column
+[2025-05-18 08:52:23] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:52:23] Query successful, found 27 orders
+[2025-05-18 08:52:24] Returning 27 orders
+[2025-05-18 08:52:51] get_orders.php started
+[2025-05-18 08:52:51] DB file exists, attempting to include
+[2025-05-18 08:52:51] Database connection successful
+[2025-05-18 08:52:52] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:52:52] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:52:52] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:52:52] Using 'id' as customer name column
+[2025-05-18 08:52:52] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:52:52] Query successful, found 27 orders
+[2025-05-18 08:52:52] Returning 27 orders
+[2025-05-18 08:56:32] get_orders.php started
+[2025-05-18 08:56:32] DB file exists, attempting to include
+[2025-05-18 08:56:32] Database connection successful
+[2025-05-18 08:56:32] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 08:56:32] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 08:56:32] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 08:56:32] Using 'id' as customer name column
+[2025-05-18 08:56:32] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 08:56:32] Query successful, found 27 orders
+[2025-05-18 08:56:33] Returning 27 orders
+[2025-05-18 11:06:47] get_orders.php started
+[2025-05-18 11:06:47] DB file exists, attempting to include
+[2025-05-18 11:06:47] Database connection successful
+[2025-05-18 11:06:47] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:06:47] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:06:47] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:06:47] Using 'id' as customer name column
+[2025-05-18 11:06:47] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:06:47] Query successful, found 27 orders
+[2025-05-18 11:06:47] Returning 27 orders
+[2025-05-18 11:10:47] get_orders.php started
+[2025-05-18 11:10:47] DB file exists, attempting to include
+[2025-05-18 11:10:47] Database connection successful
+[2025-05-18 11:10:47] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:10:47] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:10:47] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:10:47] Using 'id' as customer name column
+[2025-05-18 11:10:47] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:10:47] Query successful, found 27 orders
+[2025-05-18 11:10:47] Returning 27 orders
+[2025-05-18 11:16:00] get_orders.php started
+[2025-05-18 11:16:00] DB file exists, attempting to include
+[2025-05-18 11:16:00] Database connection successful
+[2025-05-18 11:16:00] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:16:00] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:16:00] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:16:00] Using 'id' as customer name column
+[2025-05-18 11:16:00] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:16:00] Query successful, found 27 orders
+[2025-05-18 11:16:00] Returning 27 orders
+[2025-05-18 11:16:00] get_orders.php started
+[2025-05-18 11:16:00] DB file exists, attempting to include
+[2025-05-18 11:16:00] Database connection successful
+[2025-05-18 11:16:00] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:16:00] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:16:00] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:16:00] Using 'id' as customer name column
+[2025-05-18 11:16:00] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:16:00] Query successful, found 27 orders
+[2025-05-18 11:16:00] Returning 27 orders
+[2025-05-18 11:16:00] get_orders.php started
+[2025-05-18 11:16:00] DB file exists, attempting to include
+[2025-05-18 11:16:00] Database connection successful
+[2025-05-18 11:16:00] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:16:00] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:16:00] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:16:00] Using 'id' as customer name column
+[2025-05-18 11:16:00] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:16:00] Query successful, found 27 orders
+[2025-05-18 11:16:00] Returning 27 orders
+[2025-05-18 11:19:59] get_orders.php started
+[2025-05-18 11:19:59] DB file exists, attempting to include
+[2025-05-18 11:19:59] Database connection successful
+[2025-05-18 11:19:59] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:19:59] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:19:59] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:19:59] Using 'id' as customer name column
+[2025-05-18 11:19:59] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:19:59] Query successful, found 27 orders
+[2025-05-18 11:19:59] Returning 27 orders
+[2025-05-18 11:22:41] get_orders.php started
+[2025-05-18 11:22:41] DB file exists, attempting to include
+[2025-05-18 11:22:41] Database connection successful
+[2025-05-18 11:22:41] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:22:41] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:22:41] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:22:41] Using 'id' as customer name column
+[2025-05-18 11:22:41] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:22:41] Query successful, found 27 orders
+[2025-05-18 11:22:41] Returning 27 orders
+[2025-05-18 11:23:16] get_orders.php started
+[2025-05-18 11:23:16] DB file exists, attempting to include
+[2025-05-18 11:23:16] Database connection successful
+[2025-05-18 11:23:16] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 11:23:16] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 11:23:16] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 11:23:16] Using 'id' as customer name column
+[2025-05-18 11:23:16] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 11:23:16] Query successful, found 27 orders
+[2025-05-18 11:23:16] Returning 27 orders
+[2025-05-18 12:28:53] get_orders.php started
+[2025-05-18 12:28:53] DB file exists, attempting to include
+[2025-05-18 12:28:53] Database connection successful
+[2025-05-18 12:28:53] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-18 12:28:53] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-18 12:28:53] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at
+[2025-05-18 12:28:53] Using 'id' as customer name column
+[2025-05-18 12:28:53] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-18 12:28:53] Query successful, found 7 orders
+[2025-05-18 12:28:53] Returning 7 orders
+[2025-05-20 17:39:26] get_orders.php started
+[2025-05-20 17:39:26] DB file exists, attempting to include
+[2025-05-20 17:39:26] Database connection successful
+[2025-05-20 17:39:26] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-20 17:39:26] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-20 17:39:26] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-20 17:39:26] Using 'id' as customer name column
+[2025-05-20 17:39:26] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-20 17:39:26] Query successful, found 7 orders
+[2025-05-20 17:39:26] Returning 7 orders
+[2025-05-22 13:10:16] get_orders.php started
+[2025-05-22 13:10:16] DB file exists, attempting to include
+[2025-05-22 13:10:16] Database connection successful
+[2025-05-22 13:10:16] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-22 13:10:16] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-22 13:10:16] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-22 13:10:16] Using 'id' as customer name column
+[2025-05-22 13:10:16] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-22 13:10:16] Query successful, found 9 orders
+[2025-05-22 13:10:16] Returning 9 orders
+[2025-05-22 14:23:16] get_orders.php started
+[2025-05-22 14:23:16] DB file exists, attempting to include
+[2025-05-22 14:23:16] Database connection successful
+[2025-05-22 14:23:16] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-22 14:23:16] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-22 14:23:16] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-22 14:23:16] Using 'id' as customer name column
+[2025-05-22 14:23:16] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-22 14:23:16] Query successful, found 9 orders
+[2025-05-22 14:23:16] Returning 9 orders
+[2025-05-22 14:24:10] get_orders.php started
+[2025-05-22 14:24:10] DB file exists, attempting to include
+[2025-05-22 14:24:10] Database connection successful
+[2025-05-22 14:24:10] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-22 14:24:10] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-22 14:24:10] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-22 14:24:10] Using 'id' as customer name column
+[2025-05-22 14:24:10] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-22 14:24:10] Query successful, found 9 orders
+[2025-05-22 14:24:10] Returning 9 orders
+[2025-05-22 20:18:41] get_orders.php started
+[2025-05-22 20:18:41] DB file exists, attempting to include
+[2025-05-22 20:18:41] Database connection successful
+[2025-05-22 20:18:41] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-22 20:18:41] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-22 20:18:41] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-22 20:18:41] Using 'id' as customer name column
+[2025-05-22 20:18:41] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-22 20:18:41] Query successful, found 9 orders
+[2025-05-22 20:18:41] Returning 9 orders
+[2025-05-22 20:18:57] get_orders.php started
+[2025-05-22 20:18:57] DB file exists, attempting to include
+[2025-05-22 20:18:57] Database connection successful
+[2025-05-22 20:18:57] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-22 20:18:57] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-22 20:18:57] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-22 20:18:57] Using 'id' as customer name column
+[2025-05-22 20:18:57] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-22 20:18:57] Query successful, found 9 orders
+[2025-05-22 20:18:57] Returning 9 orders
+[2025-05-23 11:48:17] get_orders.php started
+[2025-05-23 11:48:17] DB file exists, attempting to include
+[2025-05-23 11:48:17] Database connection successful
+[2025-05-23 11:48:17] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-23 11:48:17] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-23 11:48:17] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-23 11:48:17] Using 'id' as customer name column
+[2025-05-23 11:48:17] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-23 11:48:17] Query successful, found 12 orders
+[2025-05-23 11:48:17] Returning 12 orders
+[2025-05-23 12:24:22] get_orders.php started
+[2025-05-23 12:24:22] DB file exists, attempting to include
+[2025-05-23 12:24:22] Database connection successful
+[2025-05-23 12:24:22] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-23 12:24:23] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-23 12:24:23] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-23 12:24:23] Using 'id' as customer name column
+[2025-05-23 12:24:23] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-23 12:24:23] Query successful, found 12 orders
+[2025-05-23 12:24:23] Returning 12 orders
+[2025-05-23 12:25:13] get_orders.php started
+[2025-05-23 12:25:13] DB file exists, attempting to include
+[2025-05-23 12:25:13] Database connection successful
+[2025-05-23 12:25:14] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-23 12:25:14] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-23 12:25:14] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-23 12:25:14] Using 'id' as customer name column
+[2025-05-23 12:25:14] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-23 12:25:14] Query successful, found 12 orders
+[2025-05-23 12:25:14] Returning 12 orders
+[2025-05-23 12:26:19] get_orders.php started
+[2025-05-23 12:26:19] DB file exists, attempting to include
+[2025-05-23 12:26:19] Database connection successful
+[2025-05-23 12:26:19] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-23 12:26:19] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-23 12:26:19] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-23 12:26:19] Using 'id' as customer name column
+[2025-05-23 12:26:19] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-23 12:26:19] Query successful, found 11 orders
+[2025-05-23 12:26:19] Returning 11 orders
+[2025-05-23 14:02:23] get_orders.php started
+[2025-05-23 14:02:23] DB file exists, attempting to include
+[2025-05-23 14:02:23] Database connection successful
+[2025-05-23 14:02:23] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-23 14:02:23] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-23 14:02:23] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-23 14:02:23] Using 'id' as customer name column
+[2025-05-23 14:02:23] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-23 14:02:23] Query successful, found 11 orders
+[2025-05-23 14:02:23] Returning 11 orders
+[2025-05-23 14:17:51] get_orders.php started
+[2025-05-23 14:17:51] DB file exists, attempting to include
+[2025-05-23 14:17:51] Database connection successful
+[2025-05-23 14:17:51] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-23 14:17:51] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-23 14:17:51] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-23 14:17:51] Using 'id' as customer name column
+[2025-05-23 14:17:51] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-23 14:17:51] Query successful, found 12 orders
+[2025-05-23 14:17:51] Returning 12 orders
+[2025-05-24 07:51:17] get_orders.php started
+[2025-05-24 07:51:17] DB file exists, attempting to include
+[2025-05-24 07:51:17] Database connection successful
+[2025-05-24 07:51:17] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-24 07:51:17] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-24 07:51:17] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-24 07:51:17] Using 'id' as customer name column
+[2025-05-24 07:51:17] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-24 07:51:17] Query successful, found 12 orders
+[2025-05-24 07:51:17] Returning 12 orders
+[2025-05-24 07:51:25] get_orders.php started
+[2025-05-24 07:51:25] DB file exists, attempting to include
+[2025-05-24 07:51:25] Database connection successful
+[2025-05-24 07:51:25] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-24 07:51:25] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-24 07:51:25] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-24 07:51:25] Using 'id' as customer name column
+[2025-05-24 07:51:25] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-24 07:51:25] Query successful, found 12 orders
+[2025-05-24 07:51:25] Returning 12 orders
+[2025-05-24 18:04:27] get_orders.php started
+[2025-05-24 18:04:27] DB file exists, attempting to include
+[2025-05-24 18:04:27] Database connection successful
+[2025-05-24 18:04:27] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-24 18:04:27] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-24 18:04:27] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-24 18:04:27] Using 'id' as customer name column
+[2025-05-24 18:04:27] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-24 18:04:27] Query successful, found 12 orders
+[2025-05-24 18:04:27] Returning 12 orders
+[2025-05-24 18:10:26] get_orders.php started
+[2025-05-24 18:10:26] DB file exists, attempting to include
+[2025-05-24 18:10:26] Database connection successful
+[2025-05-24 18:10:26] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-24 18:10:26] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-24 18:10:26] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-24 18:10:26] Using 'id' as customer name column
+[2025-05-24 18:10:26] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-24 18:10:26] Query successful, found 12 orders
+[2025-05-24 18:10:26] Returning 12 orders
+[2025-05-25 07:44:10] get_orders.php started
+[2025-05-25 07:44:10] DB file exists, attempting to include
+[2025-05-25 07:44:10] Database connection successful
+[2025-05-25 07:44:10] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 07:44:10] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 07:44:10] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 07:44:10] Using 'id' as customer name column
+[2025-05-25 07:44:10] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 07:44:10] Query successful, found 12 orders
+[2025-05-25 07:44:10] Returning 12 orders
+[2025-05-25 08:13:32] get_orders.php started
+[2025-05-25 08:13:32] DB file exists, attempting to include
+[2025-05-25 08:13:32] Database connection successful
+[2025-05-25 08:13:32] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 08:13:32] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 08:13:32] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 08:13:32] Using 'id' as customer name column
+[2025-05-25 08:13:32] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 08:13:32] Query successful, found 12 orders
+[2025-05-25 08:13:32] Returning 12 orders
+[2025-05-25 08:17:17] get_orders.php started
+[2025-05-25 08:17:17] DB file exists, attempting to include
+[2025-05-25 08:17:17] Database connection successful
+[2025-05-25 08:17:17] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 08:17:17] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 08:17:17] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 08:17:17] Using 'id' as customer name column
+[2025-05-25 08:17:17] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 08:17:17] Query successful, found 12 orders
+[2025-05-25 08:17:17] Returning 12 orders
+[2025-05-25 08:36:22] get_orders.php started
+[2025-05-25 08:36:22] DB file exists, attempting to include
+[2025-05-25 08:36:22] Database connection successful
+[2025-05-25 08:36:22] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 08:36:22] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 08:36:22] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 08:36:22] Using 'id' as customer name column
+[2025-05-25 08:36:22] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 08:36:22] Query successful, found 12 orders
+[2025-05-25 08:36:22] Returning 12 orders
+[2025-05-25 21:08:07] get_orders.php started
+[2025-05-25 21:08:07] DB file exists, attempting to include
+[2025-05-25 21:08:07] Database connection successful
+[2025-05-25 21:08:07] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 21:08:07] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 21:08:07] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 21:08:07] Using 'id' as customer name column
+[2025-05-25 21:08:07] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 21:08:07] Query successful, found 13 orders
+[2025-05-25 21:08:07] Returning 13 orders
+[2025-05-25 21:22:19] get_orders.php started
+[2025-05-25 21:22:19] DB file exists, attempting to include
+[2025-05-25 21:22:19] Database connection successful
+[2025-05-25 21:22:19] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 21:22:19] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 21:22:19] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 21:22:19] Using 'id' as customer name column
+[2025-05-25 21:22:19] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 21:22:19] Query successful, found 13 orders
+[2025-05-25 21:22:19] Returning 13 orders
+[2025-05-25 22:07:37] get_orders.php started
+[2025-05-25 22:07:37] DB file exists, attempting to include
+[2025-05-25 22:07:37] Database connection successful
+[2025-05-25 22:07:37] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 22:07:37] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 22:07:37] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 22:07:37] Using 'id' as customer name column
+[2025-05-25 22:07:37] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 22:07:37] Query successful, found 15 orders
+[2025-05-25 22:07:37] Returning 15 orders
+[2025-05-25 23:20:45] get_orders.php started
+[2025-05-25 23:20:45] DB file exists, attempting to include
+[2025-05-25 23:20:45] Database connection successful
+[2025-05-25 23:20:45] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-25 23:20:45] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-25 23:20:45] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-25 23:20:45] Using 'id' as customer name column
+[2025-05-25 23:20:45] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-25 23:20:45] Query successful, found 16 orders
+[2025-05-25 23:20:45] Returning 16 orders
+[2025-05-26 05:55:04] get_orders.php started
+[2025-05-26 05:55:04] DB file exists, attempting to include
+[2025-05-26 05:55:04] Database connection successful
+[2025-05-26 05:55:04] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 05:55:04] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 05:55:04] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 05:55:04] Using 'id' as customer name column
+[2025-05-26 05:55:04] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 05:55:04] Query successful, found 16 orders
+[2025-05-26 05:55:04] Returning 16 orders
+[2025-05-26 06:15:03] get_orders.php started
+[2025-05-26 06:15:03] DB file exists, attempting to include
+[2025-05-26 06:15:03] Database connection successful
+[2025-05-26 06:15:03] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:15:03] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:15:03] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:15:03] Using 'id' as customer name column
+[2025-05-26 06:15:03] Executing query: SELECT o.*, CONCAT(u.first_name, ' ', u.last_name) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number FROM orders o LEFT JOIN users u ON o.user_id = u.id LEFT JOIN user_addresses a ON o.delivery_address_id = a.id ORDER BY o.created_at DESC, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:15:03] Exception: You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near 'as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = ...' at line 1
+[2025-05-26 06:17:50] get_orders.php started
+[2025-05-26 06:17:50] DB file exists, attempting to include
+[2025-05-26 06:17:50] Database connection successful
+[2025-05-26 06:17:50] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:17:50] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:17:50] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:17:50] Using 'id' as customer name column
+[2025-05-26 06:17:50] Executing query: SELECT o.*, u.id as customer_name, u.email as customer_email, a.street_address, a.city, a.state, a.postal_code, a.phone_number, p.code as promo_code FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:17:50] Query successful, found 16 orders
+[2025-05-26 06:17:50] Returning 16 orders
+[2025-05-26 06:19:34] get_orders.php started
+[2025-05-26 06:19:34] DB file exists, attempting to include
+[2025-05-26 06:19:34] Database connection successful
+[2025-05-26 06:19:34] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:19:34] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:19:34] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:19:34] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:19:34] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:19:34] Query successful, found 16 orders
+[2025-05-26 06:19:34] Returning 16 orders
+[2025-05-26 06:21:32] get_orders.php started
+[2025-05-26 06:21:32] DB file exists, attempting to include
+[2025-05-26 06:21:32] Database connection successful
+[2025-05-26 06:21:32] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:21:32] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:21:32] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:21:32] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:21:32] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:21:32] Query successful, found 16 orders
+[2025-05-26 06:21:32] Returning 16 orders
+[2025-05-26 06:21:32] get_orders.php started
+[2025-05-26 06:21:32] DB file exists, attempting to include
+[2025-05-26 06:21:32] Database connection successful
+[2025-05-26 06:21:32] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:21:32] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:21:32] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:21:32] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:21:32] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:21:32] Query successful, found 16 orders
+[2025-05-26 06:21:32] Returning 16 orders
+[2025-05-26 06:21:32] get_orders.php started
+[2025-05-26 06:21:32] DB file exists, attempting to include
+[2025-05-26 06:21:32] Database connection successful
+[2025-05-26 06:21:33] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:21:33] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:21:33] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:21:33] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:21:33] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:21:33] Query successful, found 16 orders
+[2025-05-26 06:21:33] Returning 16 orders
+[2025-05-26 06:24:04] get_orders.php started
+[2025-05-26 06:24:04] DB file exists, attempting to include
+[2025-05-26 06:24:05] Database connection successful
+[2025-05-26 06:24:05] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:24:05] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:24:05] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:24:05] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:24:05] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:24:05] Query successful, found 16 orders
+[2025-05-26 06:24:05] Returning 16 orders
+[2025-05-26 06:24:05] get_orders.php started
+[2025-05-26 06:24:05] DB file exists, attempting to include
+[2025-05-26 06:24:05] Database connection successful
+[2025-05-26 06:24:05] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:24:05] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:24:05] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:24:05] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:24:05] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:24:05] Query successful, found 16 orders
+[2025-05-26 06:24:05] Returning 16 orders
+[2025-05-26 06:25:22] get_orders.php started
+[2025-05-26 06:25:22] DB file exists, attempting to include
+[2025-05-26 06:25:22] Database connection successful
+[2025-05-26 06:25:22] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:25:22] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:25:22] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:25:22] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:25:22] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:25:22] Query successful, found 16 orders
+[2025-05-26 06:25:22] Returning 16 orders
+[2025-05-26 06:25:22] get_orders.php started
+[2025-05-26 06:25:22] DB file exists, attempting to include
+[2025-05-26 06:25:22] Database connection successful
+[2025-05-26 06:25:22] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:25:22] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:25:22] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:25:22] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:25:22] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:25:22] Query successful, found 16 orders
+[2025-05-26 06:25:22] Returning 16 orders
+[2025-05-26 06:25:22] get_orders.php started
+[2025-05-26 06:25:22] DB file exists, attempting to include
+[2025-05-26 06:25:22] Database connection successful
+[2025-05-26 06:25:22] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 06:25:22] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 06:25:22] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 06:25:22] Using concatenated first_name and last_name for customer name
+[2025-05-26 06:25:22] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 06:25:22] Query successful, found 16 orders
+[2025-05-26 06:25:22] Returning 16 orders
+[2025-05-26 09:44:33] get_orders.php started
+[2025-05-26 09:44:33] DB file exists, attempting to include
+[2025-05-26 09:44:33] Database connection successful
+[2025-05-26 09:44:33] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 09:44:33] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 09:44:33] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 09:44:33] Using concatenated first_name and last_name for customer name
+[2025-05-26 09:44:33] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 09:44:33] Query successful, found 19 orders
+[2025-05-26 09:44:33] Returning 19 orders
+[2025-05-26 12:30:22] get_orders.php started
+[2025-05-26 12:30:22] DB file exists, attempting to include
+[2025-05-26 12:30:22] Database connection successful
+[2025-05-26 12:30:22] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-26 12:30:22] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-26 12:30:22] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-26 12:30:22] Using concatenated first_name and last_name for customer name
+[2025-05-26 12:30:22] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-26 12:30:22] Query successful, found 18 orders
+[2025-05-26 12:30:22] Returning 18 orders
+[2025-05-27 22:35:09] get_orders.php started
+[2025-05-27 22:35:09] DB file exists, attempting to include
+[2025-05-27 22:35:09] Database connection successful
+[2025-05-27 22:35:09] Found users columns: id, first_name, last_name, email, password, phone_number, role, created_at, reset_password_token, reset_token_expiry, status
+[2025-05-27 22:35:09] Found address columns: id, user_id, street_address, city, state, postal_code, phone_number, is_default
+[2025-05-27 22:35:09] Found product columns: id, name, description, price, sale_price, category_id, stock, tag, image, average_rating, updated_at, created_at, total_ratings
+[2025-05-27 22:35:09] Using concatenated first_name and last_name for customer name
+[2025-05-27 22:35:09] Executing query: SELECT o.*, CONCAT(IFNULL(u.first_name, ''), ' ', IFNULL(u.last_name, '')) as customer_name, u.email as customer_email, u.phone_number as customer_phone, a.street_address, a.city, a.state, a.postal_code, a.phone_number as address_phone, p.code as promo_code_name FROM orders o 
+              LEFT JOIN users u ON o.user_id = u.id
+              LEFT JOIN user_addresses a ON o.delivery_address_id = a.id LEFT JOIN promo_codes p ON o.promo_id = p.promo_id ORDER BY o.created_at DESC
+[2025-05-27 22:35:09] Query successful, found 19 orders
+[2025-05-27 22:35:09] Returning 19 orders

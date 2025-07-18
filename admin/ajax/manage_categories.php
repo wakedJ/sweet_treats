@@ -1,4 +1,5 @@
 <?php
+
 // Pure AJAX endpoint that only returns JSON
 header('Content-Type: application/json');
 
@@ -89,7 +90,6 @@ switch ($action) {
                     'id' => $row['id'],
                     'name' => htmlspecialchars($row['name']),
                     'description' => $row['description'] ? htmlspecialchars($row['description']) : null,
-                    'parent_category_id' => $row['parent_category_id'],
                     'status' => $row['status'],
                     'product_count' => $row['product_count']
                 ];
@@ -235,18 +235,6 @@ switch ($action) {
             
             if ($product_count > 0) {
                 throw new Exception("Cannot delete category with associated products. Please reassign or delete the products first.");
-            }
-            
-            // Check if category has child categories
-            $child_check_sql = "SELECT COUNT(*) as count FROM categories WHERE parent_category_id = ?";
-            $child_check_stmt = $conn->prepare($child_check_sql);
-            $child_check_stmt->bind_param("i", $id);
-            $child_check_stmt->execute();
-            $child_check_result = $child_check_stmt->get_result();
-            $child_count = $child_check_result->fetch_assoc()['count'];
-            
-            if ($child_count > 0) {
-                throw new Exception("Cannot delete category with child categories. Please reassign or delete the child categories first.");
             }
             
             // Delete the category

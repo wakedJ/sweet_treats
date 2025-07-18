@@ -643,7 +643,205 @@
      transform: translateY(-5px);
      box-shadow: 0 10px 20px rgba(255,105,180,0.3);
  }
- 
+ /* New styles for added elements */
+
+/* Free delivery notification */
+.free-delivery-note {
+    font-size: 12px;
+    color: #ff69b4;
+    margin-top: 5px;
+    padding-left: 28px;
+    font-style: italic;
+    position: relative;
+}
+
+.free-delivery-note::before {
+    content: "\f0d1";
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    position: absolute;
+    left: 10px;
+    font-size: 11px;
+    color: #ff1493;
+    animation: bounce 2s infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+}
+
+/* Applied promo details */
+.applied-promo-details {
+    background: linear-gradient(135deg, rgba(255,105,180,0.1), rgba(255,20,147,0.1));
+    padding: 10px 15px;
+    border-radius: 8px;
+    margin-top: 10px;
+    font-size: 14px;
+    border-left: 3px solid #ff69b4;
+    position: relative;
+    overflow: hidden;
+}
+
+.applied-promo-details::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 25px;
+    height: 25px;
+    background: linear-gradient(135deg, transparent, rgba(255,105,180,0.3));
+    border-radius: 0 0 0 25px;
+}
+
+.applied-promo-details strong {
+    color: #8a2be2;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Promo message styles */
+.promo-message {
+    margin-top: 10px;
+    padding: 8px 12px;
+    font-size: 13px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.promo-message.success {
+    background-color: rgba(46, 204, 113, 0.1);
+    border-left: 3px solid #2ecc71;
+    color: #27ae60;
+}
+
+.promo-message.error {
+    background-color: rgba(231, 76, 60, 0.1);
+    border-left: 3px solid #e74c3c;
+    color: #c0392b;
+}
+
+/* Apply button styling */
+.apply-btn {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 0 4px 4px 0;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    min-width: 80px;
+}
+
+.apply-btn:hover {
+    background: linear-gradient(135deg, #ff1493, #ff69b4);
+    box-shadow: 0 2px 8px rgba(255,20,147,0.4);
+    transform: translateY(-1px);
+}
+
+/* Summary row discount styling */
+.summary-row.discount {
+    color: #2ecc71;
+    font-weight: 500;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.summary-row.discount div:first-child::before {
+    content: "\f02b";
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-right: 8px;
+    color: #ff69b4;
+}
+
+/* Promo input styling */
+.promo-input {
+    display: flex;
+    margin-top: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.promo-input input {
+    flex: 1;
+    padding: 10px 15px;
+    border: 1px solid #f0f0f0;
+    border-right: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.promo-input input:focus {
+    outline: none;
+    border-color: #ff69b4;
+    box-shadow: 0 0 0 2px rgba(255,105,180,0.2);
+}
+
+.promo-input input::placeholder {
+    color: #ccc;
+    font-style: italic;
+}
+
+/* Promo section header */
+.promo-code h3 {
+    color: #ff1493;
+    font-size: 18px;
+    margin-bottom: 8px;
+    position: relative;
+    display: inline-block;
+}
+
+.promo-code h3::after {
+    content: "";
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #ff69b4, transparent);
+    border-radius: 2px;
+}
+
+/* Delivery option data attributes visual cues */
+.delivery-option[data-fee="0"] .delivery-price {
+    color: #2ecc71;
+    font-weight: bold;
+}
+
+.delivery-option[data-fee="0"] .delivery-price::after {
+    content: "\f058";
+    font-family: 'Font Awesome 6 Free';
+    font-weight: 900;
+    margin-left: 5px;
+    opacity: 0.8;
+}
+
+/* Adaptive styles for mobile view */
+@media (max-width: 768px) {
+    .free-delivery-note {
+        padding-left: 20px;
+        font-size: 11px;
+    }
+    
+    .applied-promo-details {
+        font-size: 12px;
+        padding: 8px 12px;
+    }
+    
+    .promo-message {
+        font-size: 12px;
+        padding: 6px 10px;
+    }
+}
+
  /* Responsive styles */
  @media (max-width: 768px) {
      .cart-header {
@@ -680,3 +878,124 @@
          margin-bottom: 20px;
      }
  }
+ /* Pink Trash Button Styling */
+.delete-btn {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 12px;
+    color: white;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.delete-btn:hover {
+    background: linear-gradient(135deg, #ff1493, #dc143c);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+}
+
+.delete-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 8px rgba(255, 105, 180, 0.3);
+}
+
+.delete-btn i {
+    transition: all 0.3s ease;
+}
+
+.delete-btn:hover i {
+    transform: scale(1.1);
+    animation: shake 0.5s ease-in-out;
+}
+
+/* Shake animation for hover effect */
+@keyframes shake {
+    0%, 100% { transform: scale(1.1) rotate(0deg); }
+    25% { transform: scale(1.1) rotate(-3deg); }
+    75% { transform: scale(1.1) rotate(3deg); }
+}
+
+/* Pink ripple effect on click */
+.delete-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.delete-btn:active::before {
+    width: 100px;
+    height: 100px;
+}
+
+/* Alternative solid pink version */
+.delete-btn.solid {
+    background: #ff69b4;
+    border: 2px solid #ff1493;
+}
+
+.delete-btn.solid:hover {
+    background: #ff1493;
+    border-color: #dc143c;
+}
+
+/* Alternative outlined pink version */
+.delete-btn.outlined {
+    background: transparent;
+    border: 2px solid #ff69b4;
+    color: #ff69b4;
+}
+
+.delete-btn.outlined:hover {
+    background: #ff69b4;
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 105, 180, 0.3);
+}
+
+/* Cute version with rounded style */
+.delete-btn.cute {
+    background: linear-gradient(135deg, #ffb6c1, #ff69b4);
+    border-radius: 20px;
+    padding: 10px 15px;
+    border: none;
+    color: white;
+    font-weight: bold;
+}
+
+.delete-btn.cute:hover {
+    background: linear-gradient(135deg, #ff69b4, #ff1493);
+    transform: scale(1.05);
+}
+
+/* Modern flat design */
+.delete-btn.flat {
+    background: #ff69b4;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 14px;
+    color: white;
+    transition: background 0.2s ease;
+}
+
+.delete-btn.flat:hover {
+    background: #ff1493;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .delete-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
+}

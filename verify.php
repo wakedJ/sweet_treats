@@ -25,12 +25,21 @@ if (isset($_GET['token']) && !empty($_GET['token'])) {
             $conn->begin_transaction();
             
             try {
-                // Insert into users table
-                $insert_query = "INSERT INTO users (full_name, email, password, phone_number, verification_token, verification_token_expires, is_verified) 
-                                VALUES (?, ?, ?, ?, NULL, NULL, 1)";
+                // Insert into users table - Using the correct column names from the users table
+                $insert_query = "INSERT INTO users (first_name, last_name, email, password, phone_number, role, status) 
+                VALUES (?, ?, ?, ?, ?, 'customer', 'active')";
                 $insert_stmt = $conn->prepare($insert_query);
-                $insert_stmt->bind_param("ssss", $temp_user['full_name'], $temp_user['email'], $temp_user['password'], $temp_user['phone_number']);
+                $insert_stmt->bind_param("sssss", 
+                    $temp_user['first_name'], 
+                    $temp_user['last_name'], 
+                    $temp_user['email'], 
+                    $temp_user['password'], 
+                    $temp_user['phone_number']
+                );
                 $insert_stmt->execute();
+                
+                // Get the new user ID for transferring cart items if needed
+                $new_user_id = $conn->insert_id;
                 
                 // Delete from temp_users table
                 $delete_query = "DELETE FROM temp_users WHERE verification_token = ?";

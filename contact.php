@@ -1,18 +1,50 @@
 <?php
 // The session_start is in the header.php file
 
-// Simple form processing (you would expand this with validation, etc.)
+// Form processing with database connection
 $formSubmitted = false;
 $formError = false;
+$errorMessage = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Basic validation could go here
+    // Include database connection
+    require_once 'includes/db.php';
+    
+    // Basic validation
     if (!empty($_POST['name']) && !empty($_POST['email']) && !empty($_POST['message'])) {
-        // In a real application, you would process the form data here
-        // For example, sending an email or storing in database
-        $formSubmitted = true;
+        // Sanitize inputs
+        $name = htmlspecialchars(trim($_POST['name']));
+        $email = htmlspecialchars(trim($_POST['email']));
+        $subject = !empty($_POST['subject']) ? htmlspecialchars(trim($_POST['subject'])) : 'No Subject';
+        $message = htmlspecialchars(trim($_POST['message']));
+        
+        // Get user_id from session if the user is logged in
+        $user_id = null;
+        if (isset($_SESSION['user_id'])) {
+            $user_id = $_SESSION['user_id'];
+        }
+        
+        // Prepare and execute SQL query
+        try {
+            $stmt = $conn->prepare("INSERT INTO messages (user_id, name, email, subject, message) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("issss", $user_id, $name, $email, $subject, $message);
+            
+            if ($stmt->execute()) {
+                $formSubmitted = true;
+            } else {
+                $formError = true;
+                $errorMessage = "Failed to submit your message. Please try again.";
+            }
+            
+            $stmt->close();
+        } catch (Exception $e) {
+            $formError = true;
+            $errorMessage = "An error occurred. Please try again later.";
+            // For debugging: $errorMessage = "Database error: " . $e->getMessage();
+        }
     } else {
         $formError = true;
+        $errorMessage = "Please fill in all required fields.";
     }
 }
 ?>
@@ -85,7 +117,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     </div>
                     <?php elseif ($formError): ?>
                     <div class="error-message">
-                        <i class="fas fa-exclamation-circle"></i> Please fill in all required fields.
+                        <i class="fas fa-exclamation-circle"></i> <?php echo $errorMessage; ?>
                     </div>
                     <?php endif; ?>
                     

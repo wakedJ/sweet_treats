@@ -1,0 +1,7 @@
+Script started at 2025-05-10 16:59:59
+Basic functionality check passed
+Attempting to include: ../includes/db.php
+ERROR: Database connection file not found at: ../includes/db.php
+Sending response
+Script completed
+

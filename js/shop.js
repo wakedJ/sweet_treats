@@ -1,4 +1,149 @@
 document.addEventListener('DOMContentLoaded', function() {
+            // Add to cart functionality
+            const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
+            
+            addToCartButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    if (this.disabled) return;
+                    
+                    const productId = this.getAttribute('data-product-id');
+                    const originalText = this.innerHTML;
+                    const thisButton = this;
+                    
+                    // Immediately change button to "Added!"
+                    thisButton.innerHTML = '<i class="fas fa-check"></i> Added!';
+                    thisButton.classList.add('added');
+                    thisButton.disabled = true;
+                    
+                    // Create form data
+                    let formData = new FormData();
+                    formData.append('product_id', productId);
+                    formData.append('quantity', 1);
+                    formData.append('add_to_cart', true);
+                    
+                    fetch('shop.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.text();
+                    })
+                    .then(data => {
+                        try {
+                            // Try to parse as JSON first
+                            const jsonData = JSON.parse(data);
+                            if (jsonData.success) {
+                                // Update cart count if needed
+                                if (document.querySelector('.cart-count')) {
+                                    document.querySelector('.cart-count').textContent = jsonData.cart_count;
+                                }
+                                
+                                // Show success message
+                                const successMessage = document.createElement('div');
+                                successMessage.className = 'alert alert-success fade-out';
+                                successMessage.textContent = jsonData.message;
+                                document.querySelector('.container').insertBefore(successMessage, document.querySelector('.top-filters-bar'));
+                                
+                                // Auto-hide the message after 3 seconds
+                                setTimeout(() => {
+                                    successMessage.style.opacity = '0';
+                                    setTimeout(() => {
+                                        successMessage.remove();
+                                    }, 500);
+                                }, 3000);
+                            } else {
+                                console.error('Error:', jsonData.message);
+                            }
+                        } catch (e) {
+                            // If not JSON, it might be a simple message or HTML redirect
+                            console.log('Response was not JSON:', data);
+                        }
+                        
+                        // After 1 second, change button back to original text
+                        setTimeout(function() {
+                            thisButton.innerHTML = originalText;
+                            thisButton.classList.remove('added');
+                            thisButton.disabled = false;
+                        }, 1000);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        // Reset button after error
+                        setTimeout(function() {
+                            thisButton.innerHTML = originalText;
+                            thisButton.classList.remove('added');
+                            thisButton.disabled = false;
+                        }, 1000);
+                    });
+                });
+            });
+            
+            // Back to top button
+            const btnTop = document.getElementById('btnTop');
+            
+            window.onscroll = function() {
+                if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    btnTop.style.display = "block";
+                } else {
+                    btnTop.style.display = "none";
+                }
+            };
+            
+            btnTop.addEventListener('click', function() {
+                document.body.scrollTop = 0; // For Safari
+                document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+            });
+        });
+   // Add this JavaScript at the bottom of your shop.php page before the closing </body> tag
+// Add this JavaScript at the bottom of your shop.php page before the closing </body> tag
+// Add this JavaScript at the bottom of your shop.php page before the closing </body> tag
+document.addEventListener('DOMContentLoaded', function() {
+    // Check if there's a product_id in the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('product_id');
+    
+    if (productId) {
+        // Find all product cards - using the correct class .product-card
+        const productElements = document.querySelectorAll('.product-card');
+        
+        let targetElement = null;
+        
+        // Look for the product with matching ID
+        for (let element of productElements) {
+            // Try to find the product ID in the add-to-cart button
+            const addToCartBtn = element.querySelector('.add-to-cart-btn[data-product-id="' + productId + '"]');
+            
+            // If we found the product
+            if (addToCartBtn) {
+                targetElement = element;
+                break;
+            }
+        }
+        
+        // If we found the target product
+        if (targetElement) {
+            // Add a specific ID to the element for the anchor link to work
+            targetElement.id = 'product-' + productId;
+            
+            // Add highlight class
+            targetElement.classList.add('highlight-product');
+            
+            // Scroll to the product with a slight delay to ensure DOM is ready
+            setTimeout(() => {
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 300);
+            
+            // Remove the highlight after the animation duration (2s) plus a small buffer
+            setTimeout(() => {
+                targetElement.classList.remove('highlight-product');
+            }, 3000);
+        }
+    }
+});
+document.addEventListener('DOMContentLoaded', function() {
     // Get URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const categoryParam = urlParams.get('category');

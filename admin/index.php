@@ -1,11 +1,15 @@
 <?php
+// Start session at the very top of the file
+
+require_once './includes/check_admin.php';
+
 // Define the default page
 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
 
 // Validate the page parameter to prevent directory traversal
 $allowed_pages = ['dashboard', 'products', 'add-product', 'categories', 
-                 'add-category', 'customers', 'orders', 'reviews', 
-                 'delivery', 'top-banner'];
+                 'add-category', 'customers', 'orders','messages', 'reviews', 
+                 'promo', 'delivery', 'top-banner', 'logout'];
 
 if (!in_array($page, $allowed_pages)) {
     $page = 'dashboard'; // Default to dashboard if page is not valid
@@ -52,4 +56,4 @@ function getPageTitle($page) {
     
     <script src="js/script.js"></script>
 </body>
-</html> 
+</html>

@@ -1,12 +1,36 @@
 <?php
 session_start(); // Start session for login persistence
+
+// Check if user is already logged in and redirect accordingly
+if (isset($_SESSION['user_id']) && isset($_SESSION['user_role'])) {
+    if ($_SESSION['user_role'] === 'admin') {
+        // Admin is already logged in, redirect to admin panel
+        $admin_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/admin/index.php";
+        header("Location: $admin_url");
+        exit();
+    } else {
+        // Regular user is already logged in, redirect to account page
+        $account_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/account.php";
+        header("Location: $account_url");
+        exit();
+    }
+}
+
 include "includes/db.php"; // Include database connection
+require_once 'includes/auth_check.php';
+include "includes/cart_functions.php"; // Include cart functions
 
 // For debugging - you can remove this in production
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 
-$error_message = ""; // Initialize error message variable
+// Check for any session-based error messages (from redirects)
+$error_message = "";
+if (isset($_SESSION['login_error'])) {
+    $error_message = $_SESSION['login_error'];
+    unset($_SESSION['login_error']); // Clear the error after displaying
+}
+$login_successful = false; // Initialize login status flag
 
 // Save the current cart state before any processing
 $guest_cart = isset($_SESSION['cart']) ? $_SESSION['cart'] : [];
@@ -24,7 +48,8 @@ if (isset($_POST['login'])) {
     } else {
         try {
             // Check if email exists
-            $query = "SELECT id, password, role, full_name FROM users WHERE email = ?";
+            // Updated query to use first_name and last_name instead of full_name
+            $query = "SELECT id, password, role, first_name, last_name, status FROM users WHERE email = ?";
             $stmt = $conn->prepare($query);
             $stmt->bind_param("s", $email);
             $stmt->execute();
@@ -33,42 +58,63 @@ if (isset($_POST['login'])) {
             if ($result->num_rows === 1) {
                 $row = $result->fetch_assoc();
                 
+                // Check if account is active
+                if ($row['status'] !== 'active') {
+                    $error_message = "This account is not active. Please verify your email or contact support.";
+                }
                 // Verify password
-                if (password_verify($password, $row['password'])) {
-                    // IMPORTANT: Store the cart before setting user session variables
-                    $temp_cart = $guest_cart;
+                else if (password_verify($password, $row['password'])) {
+                    // Login successful
+                    $login_successful = true;
+                    $user_id = $row['id'];
                     
                     // Store user information in session
-                    $_SESSION['user_id'] = $row['id'];
+                    $_SESSION['user_id'] = $user_id;
                     $_SESSION['user_role'] = $row['role'];
-                    $_SESSION['user_name'] = $row['full_name'];
+                    // Combine first and last name for display purposes
+                    $_SESSION['user_name'] = $row['first_name'] . ' ' . $row['last_name'];
                     
-                    // Restore the cart
-                    if (!empty($temp_cart)) {
-                        $_SESSION['cart'] = $temp_cart;
-                        
-                        // Optional: If you store cart in database, you might want to merge or sync here
-                        // For example:
-                        // mergeCartWithDatabase($_SESSION['user_id'], $_SESSION['cart']);
+                    // Transfer session cart to database
+                    $transfer_result = transfer_session_cart_to_db($conn, $user_id);
+                    
+                    if (!$transfer_result) {
+                        // Log error but don't show to user
+                        error_log("Failed to transfer cart for user ID: $user_id");
                     }
                     
-                    // Redirect based on role or redirect parameter
-                    // Redirect based on role or redirect parameter
-            if (!empty($redirect_to)) {
-                if ($redirect_to == 'checkout') {
-                    header("Location: checkout.php");
-                } else {
-                    // Handle other redirects if needed
-                    header("Location: $redirect_to");
-                }
-                exit();
-            } else if ($row['role'] === 'admin') {
-                header("Location: admin/dashboard.php");
-                exit();
-            } else {
-                header("Location: account.php");
-                exit();
-            }
+                    // Make sure to save the user's cart count after transferring cart items
+                    $cart_count_query = "SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?";
+                    $cart_count_stmt = $conn->prepare($cart_count_query);
+                    $cart_count_stmt->bind_param("i", $user_id);
+                    $cart_count_stmt->execute();
+                    $cart_count_result = $cart_count_stmt->get_result();
+                    $cart_row = $cart_count_result->fetch_assoc();
+                    $_SESSION['cart_count'] = $cart_row['total'] ?: 0;
+                    
+                    // Optional: Add debugging
+                    // error_log("Login successful. Cart count: " . $_SESSION['cart_count']);
+                    
+                    // FIXED REDIRECT LOGIC - Use absolute paths
+                    if (!empty($redirect_to)) {
+                        if ($redirect_to == 'checkout') {
+                            header("Location: " . $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/checkout.php");
+                        } else {
+                            // Handle other redirects if needed - make them absolute
+                            $redirect_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/" . $redirect_to;
+                            header("Location: $redirect_url");
+                        }
+                        exit();
+                    } else if ($row['role'] === 'admin') {
+                        // FIXED: Use absolute path for admin redirect
+                        $admin_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/admin/index.php";
+                        header("Location: $admin_url");
+                        exit();
+                    } else {
+                        // FIXED: Use absolute path for regular user redirect
+                        $account_url = $_SERVER['REQUEST_SCHEME'] . "://" . $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF']) . "/account.php";
+                        header("Location: $account_url");
+                        exit();
+                    }
                 } else {
                     $error_message = "Incorrect email or password.";
                 }
@@ -101,76 +147,20 @@ if (isset($_SESSION['user_id'])) {
     <title>Sweet Treats - Login</title>
     <!-- Font Awesome CDN for ice cream icon -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #FFF0F5;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+    <link rel="stylesheet" href="css/login.css">
+    <script>
+    // Function to pass the email to forgot password link
+    function updateForgotPasswordLink() {
+        var emailInput = document.getElementById('email-input');
+        var forgotPasswordLink = document.getElementById('forgot-password-link');
+        
+        if (emailInput.value.trim() !== '') {
+            forgotPasswordLink.href = 'forgot-password.php?email=' + encodeURIComponent(emailInput.value.trim());
+        } else {
+            forgotPasswordLink.href = 'forgot-password.php';
         }
-        .container {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            width: 350px;
-            padding: 30px;
-        }
-        .logo {
-            color: #FF69B4;
-            text-align: center;
-            font-size: 24px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-        }
-        .logo i {
-            color: #FF69B4;
-        }
-        input {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 15px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-sizing: border-box;
-        }
-        .sign-in-link {
-            text-align: center;
-            margin-top: 15px;
-            color: #333;
-        }
-        .sign-in-link a {
-            color: #FF69B4;
-            text-decoration: none;
-        }
-        .forgot-password {
-            text-align: right;
-            margin-top: -10px;
-            margin-bottom: 15px;
-        }
-        .forgot-password a {
-            color: #FF69B4;
-            text-decoration: none;
-            font-size: 0.8em;
-        }
-        .error-message {
-            color: red;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .debug-info {
-            font-size: 12px;
-            color: #999;
-            margin-top: 20px;
-            padding-top: 10px;
-            border-top: 1px dashed #eee;
-        }
-    </style>
+    }
+    </script>
 </head>
 <body>
     <!-- Login Form -->
@@ -187,7 +177,16 @@ if (isset($_SESSION['user_id'])) {
         <?php endif; ?>
 
         <form method="post" action="">
-            <input type="email" name="email" placeholder="Email address" required value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>">
+            <input 
+                type="email" 
+                id="email-input" 
+                name="email" 
+                placeholder="Email address" 
+                required 
+                value="<?php echo isset($_POST['email']) ? htmlspecialchars($_POST['email']) : ''; ?>"
+                onchange="updateForgotPasswordLink()" 
+                onkeyup="updateForgotPasswordLink()" 
+            >
             <input type="password" name="password" placeholder="Password" required>
             
             <?php if (!empty($redirect_to)): ?>
@@ -195,7 +194,7 @@ if (isset($_SESSION['user_id'])) {
             <?php endif; ?>
 
             <div class="forgot-password">
-                <a href="forgot-password.php">Forgot password?</a>
+                <a href="forgot-password.php" id="forgot-password-link">Forgot password?</a>
             </div>
 
             <input type="submit" name="login" value="Login" style="background-color: #FF69B4; color: white; border: none; cursor: pointer; width: 100%; padding: 10px;">
@@ -211,5 +210,12 @@ if (isset($_SESSION['user_id'])) {
             <?php endif; ?>
         </form>
     </div>
+    
+    <script>
+    // Initialize the forgot password link when the page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        updateForgotPasswordLink();
+    });
+    </script>
 </body>
 </html>

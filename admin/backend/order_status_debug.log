@@ -1,0 +1,192 @@
+[2025-05-09 09:19:43] update_order_status.php started
+[2025-05-09 09:19:43] DB file exists, attempting to include
+[2025-05-09 09:19:44] Database connection successful
+[2025-05-09 09:19:44] Missing required parameters: order_id, status
+[2025-05-10 07:41:12] update_order_status.php started
+[2025-05-10 07:41:12] DB file exists, attempting to include
+[2025-05-10 07:41:12] Database connection successful
+[2025-05-10 07:41:12] Missing required parameters: order_id, status
+[2025-05-10 10:41:14] update_order_status.php started
+[2025-05-10 10:41:14] DB file exists, attempting to include
+[2025-05-10 10:41:14] Database connection successful
+[2025-05-10 10:41:14] Missing required parameters: order_id, status
+[2025-05-10 10:46:32] update_order_status.php started
+[2025-05-10 10:46:32] DB file exists, attempting to include
+[2025-05-10 10:46:32] Database connection successful
+[2025-05-10 10:46:32] Missing required parameters: order_id, status
+[2025-05-10 10:46:44] update_order_status.php started
+[2025-05-10 10:46:44] DB file exists, attempting to include
+[2025-05-10 10:46:44] Database connection successful
+[2025-05-10 10:46:44] Missing required parameters: order_id, status
+[2025-05-10 10:49:12] update_order_status.php started
+[2025-05-10 10:49:12] DB file exists, attempting to include
+[2025-05-10 10:49:12] Database connection successful
+[2025-05-10 10:49:12] Missing required parameters: order_id, status
+[2025-05-10 10:49:24] update_order_status.php started
+[2025-05-10 10:49:24] DB file exists, attempting to include
+[2025-05-10 10:49:24] Database connection successful
+[2025-05-10 10:49:24] Missing required parameters: order_id, status
+[2025-05-10 10:52:11] update_order_status.php started
+[2025-05-10 10:52:11] DB file exists, attempting to include
+[2025-05-10 10:52:11] Database connection successful
+[2025-05-10 10:52:11] Missing required parameters: order_id, status
+[2025-05-10 11:24:48] update_order_status.php started
+[2025-05-10 11:24:48] DB file exists, attempting to include
+[2025-05-10 11:24:48] Database connection successful
+[2025-05-10 11:24:48] Raw input received: {"order_id":"36","status":"completed"}
+[2025-05-10 11:24:48] Parsed data: Array
+(
+    [order_id] => 36
+    [status] => completed
+)
+
+[2025-05-10 11:24:48] Attempting to update order ID: 36 with status: completed
+[2025-05-10 11:29:05] update_order_status.php started
+[2025-05-10 11:29:05] DB file not found: ../includes/db.php
+[2025-05-10 12:48:31] update_order_status.php started
+[2025-05-10 12:48:31] DB file not found: ../includes/db.php
+[2025-05-10 19:54:51] update_order_status.php started
+[2025-05-10 19:54:51] DB file not found: ../includes/db.php
+[2025-05-10 20:03:30] update_order_status.php started
+[2025-05-10 20:03:30] Main DB path failed, trying alternatives...
+[2025-05-10 20:03:30] Trying DB file: ../../includes/db.php
+[2025-05-10 20:03:30] Successfully connected using: ../../includes/db.php
+[2025-05-10 20:03:30] Database connection successful
+[2025-05-10 20:03:30] Raw input received: {"order_id":"36","status":"cancelled"}
+[2025-05-10 20:03:30] Parsed data: Array
+(
+    [order_id] => 36
+    [status] => cancelled
+)
+
+[2025-05-10 20:03:30] Attempting to update order ID: 36 with status: cancelled
+[2025-05-10 20:11:58] update_order_status.php started
+[2025-05-10 20:11:58] Main DB path failed, trying alternatives...
+[2025-05-10 20:11:58] Trying DB file: ../../includes/db.php
+[2025-05-10 20:11:58] Successfully connected using: ../../includes/db.php
+[2025-05-10 20:11:58] Database connection successful
+[2025-05-10 20:11:58] Raw input received: {"order_id":"36","status":"processing"}
+[2025-05-10 20:11:58] Parsed data: Array
+(
+    [order_id] => 36
+    [status] => processing
+)
+
+[2025-05-10 20:11:58] Attempting to update order ID: 36 with status: processing
+[2025-05-10 20:12:03] update_order_status.php started
+[2025-05-10 20:12:03] Main DB path failed, trying alternatives...
+[2025-05-10 20:12:03] Trying DB file: ../../includes/db.php
+[2025-05-10 20:12:03] Successfully connected using: ../../includes/db.php
+[2025-05-10 20:12:03] Database connection successful
+[2025-05-10 20:12:03] Raw input received: {"order_id":"36","status":"processing"}
+[2025-05-10 20:12:03] Parsed data: Array
+(
+    [order_id] => 36
+    [status] => processing
+)
+
+[2025-05-10 20:12:03] Attempting to update order ID: 36 with status: processing
+[2025-05-10 20:12:08] update_order_status.php started
+[2025-05-10 20:12:08] Main DB path failed, trying alternatives...
+[2025-05-10 20:12:08] Trying DB file: ../../includes/db.php
+[2025-05-10 20:12:08] Successfully connected using: ../../includes/db.php
+[2025-05-10 20:12:08] Database connection successful
+[2025-05-10 20:12:08] Raw input received: {"order_id":"36","status":"processing"}
+[2025-05-10 20:12:08] Parsed data: Array
+(
+    [order_id] => 36
+    [status] => processing
+)
+
+[2025-05-10 20:12:08] Attempting to update order ID: 36 with status: processing
+[2025-05-10 20:12:13] update_order_status.php started
+[2025-05-10 20:12:13] Main DB path failed, trying alternatives...
+[2025-05-10 20:12:13] Trying DB file: ../../includes/db.php
+[2025-05-10 20:12:13] Successfully connected using: ../../includes/db.php
+[2025-05-10 20:12:13] Database connection successful
+[2025-05-10 20:12:13] Raw input received: {"order_id":"36","status":"processing"}
+[2025-05-10 20:12:13] Parsed data: Array
+(
+    [order_id] => 36
+    [status] => processing
+)
+
+[2025-05-10 20:12:13] Attempting to update order ID: 36 with status: processing
+[2025-05-10 20:12:18] update_order_status.php started
+[2025-05-10 20:12:18] Main DB path failed, trying alternatives...
+[2025-05-10 20:12:18] Trying DB file: ../../includes/db.php
+[2025-05-10 20:12:18] Successfully connected using: ../../includes/db.php
+[2025-05-10 20:12:18] Database connection successful
+[2025-05-10 20:12:18] Raw input received: {"order_id":"36","status":"processing"}
+[2025-05-10 20:12:18] Parsed data: Array
+(
+    [order_id] => 36
+    [status] => processing
+)
+
+[2025-05-10 20:12:18] Attempting to update order ID: 36 with status: processing
+[2025-05-12 11:45:27] update_order_status.php started
+[2025-05-12 11:45:27] Main DB path failed, trying alternatives...
+[2025-05-12 11:45:27] Trying DB file: ../../includes/db.php
+[2025-05-12 11:45:27] Successfully connected using: ../../includes/db.php
+[2025-05-12 11:45:27] Database connection successful
+[2025-05-12 11:45:27] Raw input received: {"order_id":"40","status":"delivered"}
+[2025-05-12 11:45:27] Parsed data: Array
+(
+    [order_id] => 40
+    [status] => delivered
+)
+
+[2025-05-12 11:45:27] Attempting to update order ID: 40 with status: delivered
+[2025-05-12 12:34:06] update_order_status.php started
+[2025-05-12 12:34:06] Main DB path failed, trying alternatives...
+[2025-05-12 12:34:06] Trying DB file: ../../includes/db.php
+[2025-05-12 12:34:06] Successfully connected using: ../../includes/db.php
+[2025-05-12 12:34:06] Database connection successful
+[2025-05-12 12:34:06] Raw input received: {"order_id":"40","status":"completed"}
+[2025-05-12 12:34:06] Parsed data: Array
+(
+    [order_id] => 40
+    [status] => completed
+)
+
+[2025-05-12 12:34:06] Attempting to update order ID: 40 with status: completed
+[2025-05-16 20:39:09] update_order_status.php started
+[2025-05-16 20:39:09] Main DB path failed, trying alternatives...
+[2025-05-16 20:39:09] Trying DB file: ../../includes/db.php
+[2025-05-16 20:39:09] Successfully connected using: ../../includes/db.php
+[2025-05-16 20:39:09] Database connection successful
+[2025-05-16 20:39:09] Raw input received: {"order_id":"33","status":"cancelled"}
+[2025-05-16 20:39:09] Parsed data: Array
+(
+    [order_id] => 33
+    [status] => cancelled
+)
+
+[2025-05-16 20:39:09] Attempting to update order ID: 33 with status: cancelled
+[2025-05-18 06:56:14] update_order_status.php started
+[2025-05-18 06:56:14] Main DB path failed, trying alternatives...
+[2025-05-18 06:56:14] Trying DB file: ../../includes/db.php
+[2025-05-18 06:56:14] Successfully connected using: ../../includes/db.php
+[2025-05-18 06:56:14] Database connection successful
+[2025-05-18 06:56:14] Raw input received: {"order_id":"42","status":"completed"}
+[2025-05-18 06:56:14] Parsed data: Array
+(
+    [order_id] => 42
+    [status] => completed
+)
+
+[2025-05-18 06:56:14] Attempting to update order ID: 42 with status: completed
+[2025-05-18 06:56:19] update_order_status.php started
+[2025-05-18 06:56:19] Main DB path failed, trying alternatives...
+[2025-05-18 06:56:19] Trying DB file: ../../includes/db.php
+[2025-05-18 06:56:19] Successfully connected using: ../../includes/db.php
+[2025-05-18 06:56:19] Database connection successful
+[2025-05-18 06:56:19] Raw input received: {"order_id":"42","status":"completed"}
+[2025-05-18 06:56:19] Parsed data: Array
+(
+    [order_id] => 42
+    [status] => completed
+)
+
+[2025-05-18 06:56:19] Attempting to update order ID: 42 with status: completed

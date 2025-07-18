@@ -1,5 +1,6 @@
 <?php
 // Include your database connection
+require_once './includes/check_admin.php';
 require_once '../includes/db.php';
 
 header('Content-Type: application/json');

@@ -1,0 +1,68 @@
+body {
+            font-family: Arial, sans-serif;
+            background-color: #FFF0F5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 350px;
+            padding: 30px;
+        }
+        .logo {
+            color: #FF69B4;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .logo i {
+            color: #FF69B4;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .sign-in-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #333;
+        }
+        .sign-in-link a {
+            color: #FF69B4;
+            text-decoration: none;
+        }
+        .forgot-password {
+            text-align: right;
+            margin-top: -10px;
+            margin-bottom: 15px;
+        }
+        .forgot-password a {
+            color: #FF69B4;
+            text-decoration: none;
+            font-size: 0.8em;
+        }
+        .error-message {
+            color: red;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .debug-info {
+            font-size: 12px;
+            color: #999;
+            margin-top: 20px;
+            padding-top: 10px;
+            border-top: 1px dashed #eee;
+        }

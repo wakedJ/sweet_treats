@@ -1,3 +1,4 @@
+<?php require_once './includes/check_admin.php';?>
 <div id="content-wrapper">
     <div class="container-fluid">
         <h3>Add New Category</h3>
@@ -15,14 +16,6 @@
                 <label for="category-desc">Description</label>
                 <textarea id="category-desc" placeholder="Enter category description" rows="3"></textarea>
                 <div class="error-message" id="desc-error"></div>
-            </div>
-            
-            <div class="form-row">
-                <label for="category-parent">Parent Category (Optional)</label>
-                <select id="category-parent">
-                    <option value="">None (Top Level Category)</option>
-                    <!-- Options will be populated via JavaScript -->
-                </select>
             </div>
             
             <div class="form-row">
@@ -46,9 +39,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Load parent categories when page loads
-    loadParentCategories();
-    
     // Add form submission handler
     document.getElementById('add-category-form').addEventListener('submit', function(e) {
         e.preventDefault();
@@ -63,7 +53,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData();
         formData.append('name', document.getElementById('category-name').value);
         formData.append('description', document.getElementById('category-desc').value);
-        formData.append('parent_category_id', document.getElementById('category-parent').value);
         formData.append('status', document.getElementById('category-status').checked ? 1 : 0);
         
         // Use the dedicated Ajax endpoint
@@ -88,9 +77,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Reset form
                 document.getElementById('add-category-form').reset();
                 document.getElementById('category-status-label').textContent = 'Active';
-                
-                // Reload parent categories dropdown
-                loadParentCategories();
                 
                 // Reload categories table if applicable
                 if (typeof loadCategories === 'function') {
@@ -121,38 +107,4 @@ document.addEventListener('DOMContentLoaded', function() {
         // Additional code to close modal or navigate back if needed
     });
 });
-
-// Load parent categories for dropdown
-function loadParentCategories() {
-    fetch('/sweet_treats/admin/ajax/get_categories.php', {
-        headers: {
-            'X-Requested-With': 'XMLHttpRequest'
-        }
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(data => {
-        if (data.success) {
-            const parentSelect = document.getElementById('category-parent');
-            // Keep the first "None" option
-            parentSelect.innerHTML = '<option value="">None (Top Level Category)</option>';
-            
-            data.categories.forEach(category => {
-                const option = document.createElement('option');
-                option.value = category.id;
-                option.textContent = category.name;
-                parentSelect.appendChild(option);
-            });
-        } else {
-            console.error('Error loading categories:', data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error loading parent categories:', error);
-    });
-}
 </script>

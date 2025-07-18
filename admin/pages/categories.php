@@ -1,3 +1,5 @@
+<?php 
+require_once './includes/check_admin.php'; ?>
 <h3>Categories Management</h3>
 <div class="status-message success" style="display: none;">Category updated successfully!</div>
 <div class="status-message error" style="display: none;">Error updating category. Please try again.</div>

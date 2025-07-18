@@ -2,68 +2,208 @@
 // Start session
 session_start();
 
-// Include database connection
+// Include database connection and cart functions
 require_once 'includes/db.php';
+require_once 'includes/cart_functions.php';
 
 // Initialize variables
 $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
 $is_logged_in = isset($_SESSION['user_id']);
-$current_page = isset($_GET['page']) ? intval($_GET['page']) : 1;
-$items_per_page = 8; // Keep original pagination count
+$current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$items_per_page = 30;
 
-// Get categories for filter dropdown
-$category_query = "SELECT * FROM categories WHERE status = 1 ORDER BY name";
-$category_result = mysqli_query($conn, $category_query);
+// Get product_id from URL if present
+$highlight_product_id = isset($_GET['product_id']) ? intval($_GET['product_id']) : 0;
 
-// Initialize filter variables
-$category_filter = isset($_GET['category']) ? intval($_GET['category']) : 0;
-$sort_by = isset($_GET['sort']) ? $_GET['sort'] : 'newest';
-$search_term = isset($_GET['search']) ? $_GET['search'] : '';
+// Cache categories in session to avoid repeated queries
+if (!isset($_SESSION['categories_cache']) || (time() - ($_SESSION['categories_cache_time'] ?? 0)) > 300) {
+    $category_query = "SELECT id, name FROM categories ORDER BY name";
+    $category_result = mysqli_query($conn, $category_query);
+    $_SESSION['categories_cache'] = mysqli_fetch_all($category_result, MYSQLI_ASSOC);
+    $_SESSION['categories_cache_time'] = time();
+}
+$categories = $_SESSION['categories_cache'];
 
-// Handle the price range filter - convert from the second file's min/max to the first file's ranges
-$price_min = isset($_GET['price_min']) ? $_GET['price_min'] : '';
-$price_max = isset($_GET['price_max']) ? $_GET['price_max'] : '';
-$price_range = isset($_GET['price']) ? $_GET['price'] : '';
+// Initialize and validate filter variables
+$category_filter = isset($_GET['category']) ? max(0, intval($_GET['category'])) : 0;
+$sort_by = isset($_GET['sort']) && in_array($_GET['sort'], ['newest', 'price-low', 'price-high', 'rating', 'featured']) 
+    ? $_GET['sort'] : 'newest';
+$search_term = isset($_GET['search']) ? trim($_GET['search']) : '';
+$price_range = isset($_GET['price']) && in_array($_GET['price'], ['under-5', '5-10', '10-20', 'over-20']) 
+    ? $_GET['price'] : '';
 
-// If no price_range but has price_min/max, convert to appropriate range
-if (empty($price_range) && (!empty($price_min) || !empty($price_max))) {
-    if (!empty($price_min) && !empty($price_max)) {
-        if ($price_min < 5 && $price_max <= 5) {
-            $price_range = 'under-5';
-        } elseif ($price_min >= 5 && $price_max <= 10) {
-            $price_range = '5-10';
-        } elseif ($price_min >= 10 && $price_max <= 20) {
-            $price_range = '10-20';
-        } elseif ($price_min >= 20) {
-            $price_range = 'over-20';
+// Handle AJAX add to cart requests early
+if (isset($_POST['add_to_cart']) && !empty($_SERVER['HTTP_X_REQUESTED_WITH']) && 
+    strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+    
+    // Set proper content type for JSON response
+    header('Content-Type: application/json');
+    
+    try {
+        // Validate input
+        if (!isset($_POST['product_id']) || !is_numeric($_POST['product_id'])) {
+            echo json_encode(['success' => false, 'message' => 'Invalid product ID']);
+            exit;
         }
-    } elseif (!empty($price_min)) {
-        if ($price_min < 5) {
-            $price_range = 'under-5';
-        } elseif ($price_min >= 5 && $price_min < 10) {
-            $price_range = '5-10';
-        } elseif ($price_min >= 10 && $price_min < 20) {
-            $price_range = '10-20';
+        
+        $product_id = intval($_POST['product_id']);
+        $quantity = isset($_POST['quantity']) && is_numeric($_POST['quantity']) ? max(1, intval($_POST['quantity'])) : 1;
+        
+        if ($product_id <= 0) {
+            echo json_encode(['success' => false, 'message' => 'Invalid product ID']);
+            exit;
+        }
+        
+        // Check if database connection exists
+        if (!$conn || mysqli_connect_errno()) {
+            echo json_encode(['success' => false, 'message' => 'Database connection error']);
+            exit;
+        }
+        
+        // Use prepared statement for stock check
+        $stock_stmt = $conn->prepare("SELECT stock, name FROM products WHERE id = ? LIMIT 1");
+        if (!$stock_stmt) {
+            echo json_encode(['success' => false, 'message' => 'Database prepare error: ' . $conn->error]);
+            exit;
+        }
+        
+        $stock_stmt->bind_param("i", $product_id);
+        if (!$stock_stmt->execute()) {
+            echo json_encode(['success' => false, 'message' => 'Database execute error: ' . $stock_stmt->error]);
+            exit;
+        }
+        
+        $stock_result = $stock_stmt->get_result();
+        $product = $stock_result->fetch_assoc();
+        
+        if (!$product) {
+            echo json_encode(['success' => false, 'message' => 'Product not found or inactive']);
+            exit;
+        }
+        
+        if ($quantity > $product['stock']) {
+            echo json_encode(['success' => false, 'message' => 'Not enough stock available. Only ' . $product['stock'] . ' items left.']);
+            exit;
+        }
+        
+        if ($is_logged_in) {
+            // Handle logged-in user cart
+            $conn->begin_transaction();
+            
+            try {
+                // Check if item already exists in cart
+                $cart_stmt = $conn->prepare("SELECT cart_item_id, quantity FROM cart_items WHERE user_id = ? AND product_id = ? LIMIT 1");
+                if (!$cart_stmt) {
+                    throw new Exception("Prepare cart check failed: " . $conn->error);
+                }
+                
+                $cart_stmt->bind_param("ii", $user_id, $product_id);
+                if (!$cart_stmt->execute()) {
+                    throw new Exception("Execute cart check failed: " . $cart_stmt->error);
+                }
+                
+                $cart_result = $cart_stmt->get_result();
+                $cart_item = $cart_result->fetch_assoc();
+                
+                if ($cart_item) {
+                    // Update existing cart item
+                    $new_quantity = $cart_item['quantity'] + $quantity;
+                    if ($new_quantity > $product['stock']) {
+                        $conn->rollback();
+                        echo json_encode(['success' => false, 'message' => 'Cannot add more of this item. Total would exceed stock limit.']);
+                        exit;
+                    }
+                    
+                    $update_stmt = $conn->prepare("UPDATE cart_items SET quantity = ?, added_date = NOW() WHERE cart_item_id = ?");
+                    if (!$update_stmt) {
+                        throw new Exception("Prepare update failed: " . $conn->error);
+                    }
+                    
+                    $update_stmt->bind_param("ii", $new_quantity, $cart_item['cart_item_id']);
+                    if (!$update_stmt->execute()) {
+                        throw new Exception("Execute update failed: " . $update_stmt->error);
+                    }
+                } else {
+                    // Insert new cart item
+                    $insert_stmt = $conn->prepare("INSERT INTO cart_items (user_id, product_id, quantity, added_date) VALUES (?, ?, ?, NOW())");
+                    if (!$insert_stmt) {
+                        throw new Exception("Prepare insert failed: " . $conn->error);
+                    }
+                    
+                    $insert_stmt->bind_param("iii", $user_id, $product_id, $quantity);
+                    if (!$insert_stmt->execute()) {
+                        throw new Exception("Execute insert failed: " . $insert_stmt->error);
+                    }
+                }
+                
+                // Get updated cart count
+                $count_stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
+                if (!$count_stmt) {
+                    throw new Exception("Prepare count failed: " . $conn->error);
+                }
+                
+                $count_stmt->bind_param("i", $user_id);
+                if (!$count_stmt->execute()) {
+                    throw new Exception("Execute count failed: " . $count_stmt->error);
+                }
+                
+                $count_result = $count_stmt->get_result();
+                $cart_count = $count_result->fetch_assoc()['total'] ?? 0;
+                
+                $conn->commit();
+                
+                echo json_encode([
+                    'success' => true, 
+                    'message' => 'Item added to cart successfully!', 
+                    'cart_count' => $cart_count,
+                    'product_name' => $product['name']
+                ]);
+                
+            } catch (Exception $e) {
+                $conn->rollback();
+                echo json_encode(['success' => false, 'message' => 'Database error: ' . $e->getMessage()]);
+                exit;
+            }
         } else {
-            $price_range = 'over-20';
+            // Handle session cart for non-logged-in users
+            if (!isset($_SESSION['cart'])) {
+                $_SESSION['cart'] = [];
+            }
+            
+            $current_quantity = isset($_SESSION['cart'][$product_id]) ? $_SESSION['cart'][$product_id]['quantity'] : 0;
+            $new_quantity = $current_quantity + $quantity;
+            
+            if ($new_quantity > $product['stock']) {
+                echo json_encode(['success' => false, 'message' => 'Cannot add more of this item. Total would exceed stock limit.']);
+                exit;
+            }
+            
+            $_SESSION['cart'][$product_id] = [
+                'quantity' => $new_quantity,
+                'added_date' => date('Y-m-d H:i:s')
+            ];
+            
+            $cart_count = array_sum(array_column($_SESSION['cart'], 'quantity'));
+            
+            echo json_encode([
+                'success' => true, 
+                'message' => 'Item added to cart successfully!', 
+                'cart_count' => $cart_count,
+                'product_name' => $product['name']
+            ]);
         }
-    } elseif (!empty($price_max)) {
-        if ($price_max <= 5) {
-            $price_range = 'under-5';
-        } elseif ($price_max <= 10) {
-            $price_range = '5-10';
-        } elseif ($price_max <= 20) {
-            $price_range = '10-20';
-        } else {
-            $price_range = 'over-20';
+        
+    } catch (Exception $e) {
+        if ($is_logged_in && isset($conn)) {
+            $conn->rollback();
         }
+        echo json_encode(['success' => false, 'message' => 'Unexpected error: ' . $e->getMessage()]);
     }
+    exit;
 }
 
-// Prepare the base query
-$base_query = "SELECT p.*, COUNT(r.id) as review_count 
-                FROM products p 
-                LEFT JOIN reviews r ON p.id = r.product_id ";
+// Prepare the base query - using your original working structure
+$base_query = "SELECT p.* FROM products p ";
 
 // Add WHERE clauses based on filters
 $where_clauses = [];
@@ -117,9 +257,6 @@ if (!empty($where_clauses)) {
     $query .= " WHERE " . implode(' AND ', $where_clauses);
 }
 
-// Group by to handle the COUNT aggregate
-$query .= " GROUP BY p.id";
-
 // Add ORDER BY clause based on sort selection
 switch ($sort_by) {
     case 'price-low':
@@ -171,94 +308,11 @@ if (!empty($params)) {
 $stmt->execute();
 $result = $stmt->get_result();
 
-// Add to cart functionality - moved from template to PHP
-if (isset($_POST['add_to_cart'])) {
-    $product_id = $_POST['product_id'];
-    $quantity = isset($_POST['quantity']) ? intval($_POST['quantity']) : 1;
-    
-    // Validate quantity
-    $stock_stmt = $conn->prepare("SELECT stock FROM products WHERE id = ?");
-    $stock_stmt->bind_param("i", $product_id);
-    $stock_stmt->execute();
-    $stock_result = $stock_stmt->get_result();
-    $product = $stock_result->fetch_assoc();
-    
-    if ($quantity > $product['stock']) {
-        $error_message = "Not enough stock available";
-    } else {
-        if ($is_logged_in) {
-            // Check if product already in cart
-            $cart_stmt = $conn->prepare("SELECT * FROM cart_items WHERE user_id = ? AND product_id = ?");
-            $cart_stmt->bind_param("ii", $user_id, $product_id);
-            $cart_stmt->execute();
-            $cart_result = $cart_stmt->get_result();
-            
-            if ($cart_result->num_rows > 0) {
-                // Update quantity
-                $cart_item = $cart_result->fetch_assoc();
-                $new_quantity = $cart_item['quantity'] + $quantity;
-                
-                if ($new_quantity > $product['stock']) {
-                    $error_message = "Cannot add more of this item (stock limit)";
-                } else {
-                    $update_stmt = $conn->prepare("UPDATE cart_items SET quantity = ? WHERE id = ?");
-                    $update_stmt->bind_param("ii", $new_quantity, $cart_item['id']);
-                    $update_stmt->execute();
-                    $success_message = "Cart updated successfully!";
-                }
-            } else {
-                // Insert new item
-                $insert_stmt = $conn->prepare("INSERT INTO cart_items (user_id, product_id, quantity) VALUES (?, ?, ?)");
-                $insert_stmt->bind_param("iii", $user_id, $product_id, $quantity);
-                $insert_stmt->execute();
-                $success_message = "Item added to cart!";
-            }
-        } else {
-            // Use session cart
-            if (!isset($_SESSION['cart'])) {
-                $_SESSION['cart'] = [];
-            }
-            
-            if (isset($_SESSION['cart'][$product_id])) {
-                // Update quantity
-                $new_quantity = $_SESSION['cart'][$product_id]['quantity'] + $quantity;
-                
-                if ($new_quantity > $product['stock']) {
-                    $error_message = "Cannot add more of this item (stock limit)";
-                } else {
-                    $_SESSION['cart'][$product_id]['quantity'] = $new_quantity;
-                    $success_message = "Cart updated successfully!";
-                }
-            } else {
-                // Add new item
-                $_SESSION['cart'][$product_id] = [
-                    'quantity' => $quantity
-                ];
-                $success_message = "Item added to cart!";
-            }
-        }
-        
-        // Get updated cart count for display
-        $cart_count = 0;
-        if ($is_logged_in) {
-            $count_stmt = $conn->prepare("SELECT SUM(quantity) as total FROM cart_items WHERE user_id = ?");
-            $count_stmt->bind_param("i", $user_id);
-            $count_stmt->execute();
-            $count_result = $count_stmt->get_result();
-            $cart_count = $count_result->fetch_assoc()['total'] ?: 0;
-        } else if (isset($_SESSION['cart'])) {
-            foreach ($_SESSION['cart'] as $item) {
-                $cart_count += $item['quantity'];
-            }
-        }
-        
-        // If this is an AJAX request, return JSON
-        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            header('Content-Type: application/json');
-            echo json_encode(['success' => true, 'message' => $success_message, 'cart_count' => $cart_count]);
-            exit;
-        }
-    }
+// Helper function for building filter URLs
+function buildFilterUrl($params) {
+    $current_params = $_GET;
+    $current_params = array_merge($current_params, $params);
+    return '?' . http_build_query(array_filter($current_params));
 }
 ?>
 <!DOCTYPE html>
@@ -273,7 +327,63 @@ if (isset($_POST['add_to_cart'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
     <link rel="stylesheet" href="css/shop.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        /* Loading states */
+        .filter-loading {
+            pointer-events: none;
+            opacity: 0.6;
+            position: relative;
+        }
+        
+        .filter-loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 20px;
+            height: 20px;
+            margin: -10px 0 0 -10px;
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes highlight {
+            0% { box-shadow: 0 0 0 0 rgba(255,215,0, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(255,215,0, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(255,215,0, 0); }
+        }
 
+        .highlight-product {
+            animation: highlight 2s ease-in-out;
+            border: 2px solid gold;
+        }
+        
+        /* Error message styling */
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 4px;
+            margin: 10px 0;
+            border: 1px solid #c3e6cb;
+        }
+    </style>
 </head>
 <body>
     <?php include 'includes/header.php'; ?>
@@ -293,21 +403,13 @@ if (isset($_POST['add_to_cart'])) {
     
     <!-- Shop Content -->
     <div class="container">
-        <!-- Success/Error Messages -->
-        <?php if (isset($success_message)): ?>
-            <div class="alert alert-success"><?php echo $success_message; ?></div>
-        <?php endif; ?>
-        
-        <?php if (isset($error_message)): ?>
-            <div class="alert alert-danger"><?php echo $error_message; ?></div>
-        <?php endif; ?>
-    
         <!-- Top Search and Filter Bar -->
         <div class="top-filters-bar">
             <form method="GET" action="shop.php" id="filter-form">
                 <div class="search-row">
                     <div class="search-box">
-                        <input type="text" name="search" placeholder="Search for yummy treats..." value="<?php echo htmlspecialchars($search_term); ?>">
+                        <input type="text" name="search" placeholder="Search for yummy treats..." 
+                               value="<?php echo htmlspecialchars($search_term); ?>" id="search-input">
                         <button type="submit" class="search-button">
                             <i class="fa fa-search"></i>
                         </button>
@@ -317,23 +419,20 @@ if (isset($_POST['add_to_cart'])) {
                 <div class="filter-row">
                     <div class="filter-group">
                         <span class="filter-label">Category:</span>
-                        <select name="category" class="filter-select" onchange="this.form.submit()">
+                        <select name="category" class="filter-select" id="category-filter">
                             <option value="0">All Categories</option>
-                            <?php 
-                            // Reset the pointer to the start of category result set
-                            mysqli_data_seek($category_result, 0);
-                            while ($category = mysqli_fetch_assoc($category_result)) : 
-                            ?>
-                                <option value="<?php echo $category['id']; ?>" <?php echo ($category_filter == $category['id']) ? 'selected' : ''; ?>>
+                            <?php foreach ($categories as $category) : ?>
+                                <option value="<?php echo $category['id']; ?>" 
+                                        <?php echo ($category_filter == $category['id']) ? 'selected' : ''; ?>>
                                     <?php echo htmlspecialchars($category['name']); ?>
                                 </option>
-                            <?php endwhile; ?>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                     
                     <div class="filter-group">
                         <span class="filter-label">Sort by:</span>
-                        <select name="sort" class="filter-select" onchange="this.form.submit()">
+                        <select name="sort" class="filter-select" id="sort-filter">
                             <option value="featured" <?php echo ($sort_by == 'featured') ? 'selected' : ''; ?>>Featured</option>
                             <option value="price-low" <?php echo ($sort_by == 'price-low') ? 'selected' : ''; ?>>Price: Low to High</option>
                             <option value="price-high" <?php echo ($sort_by == 'price-high') ? 'selected' : ''; ?>>Price: High to Low</option>
@@ -344,7 +443,7 @@ if (isset($_POST['add_to_cart'])) {
                     
                     <div class="filter-group price-filter-group">
                         <span class="filter-label">Price:</span>
-                        <select name="price" class="filter-select" onchange="this.form.submit()">
+                        <select name="price" class="filter-select" id="price-filter">
                             <option value="" <?php echo ($price_range == '') ? 'selected' : ''; ?>>All Prices</option>
                             <option value="under-5" <?php echo ($price_range == 'under-5') ? 'selected' : ''; ?>>Under $5</option>
                             <option value="5-10" <?php echo ($price_range == '5-10') ? 'selected' : ''; ?>>$5 - $10</option>
@@ -352,12 +451,12 @@ if (isset($_POST['add_to_cart'])) {
                             <option value="over-20" <?php echo ($price_range == 'over-20') ? 'selected' : ''; ?>>$20+</option>
                         </select>
                         <div class="price-sort-arrows">
-                            <a href="?<?php echo http_build_query(array_merge($_GET, ['sort' => 'price-low'])); ?>" 
+                            <a href="<?php echo buildFilterUrl(['sort' => 'price-low']); ?>" 
                                class="price-arrow <?php echo ($sort_by == 'price-low') ? 'active' : ''; ?>" 
                                title="Sort by Price: Low to High">
                                 <i class="fas fa-arrow-up"></i>
                             </a>
-                            <a href="?<?php echo http_build_query(array_merge($_GET, ['sort' => 'price-high'])); ?>" 
+                            <a href="<?php echo buildFilterUrl(['sort' => 'price-high']); ?>" 
                                class="price-arrow <?php echo ($sort_by == 'price-high') ? 'active' : ''; ?>" 
                                title="Sort by Price: High to Low">
                                 <i class="fas fa-arrow-down"></i>
@@ -372,7 +471,7 @@ if (isset($_POST['add_to_cart'])) {
                 </div>
                 
                 <?php if ($current_page > 1) : ?>
-                    <input type="hidden" name="page" value="<?php echo $current_page; ?>">
+                    <input type="hidden" name="page" value="1">
                 <?php endif; ?>
             </form>
         </div>
@@ -387,82 +486,70 @@ if (isset($_POST['add_to_cart'])) {
         <?php endif; ?>
 
         <!-- Products Grid Section -->
-        <div class="products-grid">
+        <div class="products-grid" id="products-grid">
             <?php
-            if (mysqli_num_rows($result) > 0) {
-                while ($product = mysqli_fetch_assoc($result)) :
-                    // Convert tag value to a display name if needed
-                    $badge = '';
-                    if ($product['tag'] != 'none') {
-                        $badge = ucwords(str_replace('_', ' ', $product['tag']));
-                    }
-                    
-                    // Determine image path - check if file exists or use default path
-                    if (!empty($product['image'])) {
-                        $image_path = "images/products/" . $product['image'];
-                        // Check if the file exists, if not use a placeholder
-                        if (!file_exists($image_path)) {
-                            $image_path = "images/products/placeholder.jpg";
-                        }
-                    } else {
-                        $image_path = "images/products/placeholder.jpg";
-                    }
-            ?>
-                <div class="product-card" data-category="<?php echo $product['category_id']; ?>">
-                    <?php if (!empty($badge)) : ?>
-                        <div class="product-badge"><?php echo $badge; ?></div>
-                    <?php endif; ?>
-                    
-                    <div class="product-image">
-                        <img src="<?php echo $image_path; ?>" alt="<?php echo htmlspecialchars($product['name']); ?>">
-                        <!-- Debug info to check image path - can be enabled for troubleshooting -->
-                        <div class="image-debug"><?php echo basename($image_path); ?></div>
-                    </div>
-                    
-                    <div class="product-details">
-                        <h3><?php echo htmlspecialchars($product['name']); ?></h3>
-                        
-                        <div class="star-rating">
-                            <?php
-                            // Display star rating
-                            $rating = floatval($product['average_rating']);
-                            for ($i = 1; $i <= 5; $i++) {
-                                if ($i <= floor($rating)) {
-                                    echo '<i class="fas fa-star"></i>';
-                                } elseif ($i - 0.5 <= $rating) {
-                                    echo '<i class="fas fa-star-half-alt"></i>';
-                                } else {
-                                    echo '<i class="far fa-star"></i>';
-                                }
-                            }
-                            ?>
-                            <span class="rating-number">(<?php echo $product['review_count']; ?>)</span>
-                        </div>
-                        
-                        <div class="product-price">
-                            <?php if (!empty($product['sale_price']) && $product['sale_price'] < $product['price']) : ?>
-                                <span class="original-price">$<?php echo number_format($product['price'], 2); ?></span>
-                                <span class="sale-price">$<?php echo number_format($product['sale_price'], 2); ?></span>
-                            <?php else : ?>
-                                $<?php echo number_format($product['price'], 2); ?>
-                            <?php endif; ?>
-                        </div>
-                        
-                        <?php if ($product['stock'] > 0) : ?>
-                            <button class="add-to-cart-btn" data-product-id="<?php echo $product['id']; ?>">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
-                            </button>
-                            <?php if ($product['stock'] < 10) : ?>
-                                <div class="stock-status">Only <?php echo $product['stock']; ?> left!</div>
-                            <?php endif; ?>
-                        <?php else : ?>
-                            <button class="add-to-cart-btn" disabled>
-                                <i class="fas fa-shopping-cart"></i> Out of Stock
-                            </button>
+            if ($result->num_rows > 0) {
+                while ($product = $result->fetch_assoc()) :
+                    $badge = ($product['tag'] != 'none') ? ucwords(str_replace('_', ' ', $product['tag'])) : '';
+                    $image_path = file_exists("admin/uploads/products/" . $product['image']) ? 
+                        "admin/uploads/products/" . $product['image'] : 
+                        "admin/uploads/products/placeholder.jpg";
+                    ?>
+                    <div class="product-card" data-product-id="<?php echo $product['id']; ?>" id="product-<?php echo $product['id']; ?>">
+                        <?php if (!empty($badge)) : ?>
+                            <div class="product-badge"><?php echo $badge; ?></div>
                         <?php endif; ?>
+                        
+                        <div class="product-image">
+                            <img src="<?php echo htmlspecialchars($image_path); ?>" 
+                                 alt="<?php echo htmlspecialchars($product['name']); ?>"
+                                 loading="lazy">
+                        </div>
+
+                        <div class="product-details">
+                            <h3><?php echo htmlspecialchars($product['name']); ?></h3>
+                            
+                            <div class="star-rating">
+                                <?php
+                                // Display star rating
+                                $rating = floatval($product['average_rating'] ?? 0);
+                                for ($i = 1; $i <= 5; $i++) {
+                                    if ($i <= floor($rating)) {
+                                        echo '<i class="fas fa-star"></i>';
+                                    } elseif ($i - 0.5 <= $rating) {
+                                        echo '<i class="fas fa-star-half-alt"></i>';
+                                    } else {
+                                        echo '<i class="far fa-star"></i>';
+                                    }
+                                }
+                                ?>
+                                <span class="rating-number">(<?php echo isset($product['total_ratings']) ? $product['total_ratings'] : 0; ?>)</span>
+                            </div>
+                            
+                            <div class="product-price">
+                                <?php if (!empty($product['sale_price']) && $product['sale_price'] < $product['price']) : ?>
+                                    <span class="original-price">$<?php echo number_format($product['price'], 2); ?></span>
+                                    <span class="sale-price">$<?php echo number_format($product['sale_price'], 2); ?></span>
+                                <?php else : ?>
+                                    $<?php echo number_format($product['price'], 2); ?>
+                                <?php endif; ?>
+                            </div>
+                            
+                            <?php if ($product['stock'] > 0) : ?>
+                                <button class="add-to-cart-btn" data-product-id="<?php echo $product['id']; ?>">
+                                    <i class="fas fa-shopping-cart"></i> Add to Cart
+                                </button>
+                                <?php if ($product['stock'] < 10) : ?>
+                                    <div class="stock-status">Only <?php echo $product['stock']; ?> left!</div>
+                                <?php endif; ?>
+                            <?php else : ?>
+                                <button class="add-to-cart-btn" disabled>
+                                    <i class="fas fa-shopping-cart"></i> Out of Stock
+                                </button>
+                            <?php endif; ?>
+                        </div>
                     </div>
-                </div>
-            <?php 
+                <?php 
                 endwhile;
             } else {
                 echo '<div class="no-products-found"><p>No products found matching your criteria.</p></div>';
@@ -475,37 +562,24 @@ if (isset($_POST['add_to_cart'])) {
         <div class="pagination-container">
             <ul class="pagination">
                 <?php if ($current_page > 1) : ?>
-                    <li><a href="?page=<?php echo ($current_page - 1); ?><?php 
-                        echo (!empty($search_term)) ? '&search=' . urlencode($search_term) : ''; 
-                        echo ($category_filter > 0) ? '&category=' . $category_filter : ''; 
-                        echo (!empty($sort_by)) ? '&sort=' . $sort_by : '';
-                        echo (!empty($price_range)) ? '&price=' . $price_range : '';
-                    ?>"><i class="fas fa-chevron-left"></i></a></li>
+                    <li><a href="<?php echo buildFilterUrl(['page' => $current_page - 1]); ?>">
+                        <i class="fas fa-chevron-left"></i></a></li>
                 <?php endif; ?>
                 
                 <?php
-                // Determine range of page numbers to show
                 $range = 3;
                 $start_page = max(1, $current_page - $range);
                 $end_page = min($total_pages, $current_page + $range);
                 
                 for ($i = $start_page; $i <= $end_page; $i++) :
                 ?>
-                    <li><a href="?page=<?php echo $i; ?><?php 
-                        echo (!empty($search_term)) ? '&search=' . urlencode($search_term) : ''; 
-                        echo ($category_filter > 0) ? '&category=' . $category_filter : ''; 
-                        echo (!empty($sort_by)) ? '&sort=' . $sort_by : '';
-                        echo (!empty($price_range)) ? '&price=' . $price_range : '';
-                    ?>" <?php echo ($i == $current_page) ? 'class="active"' : ''; ?>><?php echo $i; ?></a></li>
+                    <li><a href="<?php echo buildFilterUrl(['page' => $i]); ?>" 
+                           <?php echo ($i == $current_page) ? 'class="active"' : ''; ?>><?php echo $i; ?></a></li>
                 <?php endfor; ?>
                 
                 <?php if ($current_page < $total_pages) : ?>
-                    <li><a href="?page=<?php echo ($current_page + 1); ?><?php 
-                        echo (!empty($search_term)) ? '&search=' . urlencode($search_term) : ''; 
-                        echo ($category_filter > 0) ? '&category=' . $category_filter : ''; 
-                        echo (!empty($sort_by)) ? '&sort=' . $sort_by : '';
-                        echo (!empty($price_range)) ? '&price=' . $price_range : '';
-                    ?>"><i class="fas fa-chevron-right"></i></a></li>
+                    <li><a href="<?php echo buildFilterUrl(['page' => $current_page + 1]); ?>">
+                        <i class="fas fa-chevron-right"></i></a></li>
                 <?php endif; ?>
             </ul>
         </div>
@@ -519,108 +593,193 @@ if (isset($_POST['add_to_cart'])) {
     <!-- footer -->
     <?php include 'includes/footer.php'; ?>
 
-    <!-- JavaScript for cart functionality -->
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Add to cart functionality
-        const addToCartButtons = document.querySelectorAll('.add-to-cart-btn');
-        
-        addToCartButtons.forEach(button => {
-            button.addEventListener('click', function() {
-                if (this.disabled) return;
-                
-                const productId = this.getAttribute('data-product-id');
-                const originalText = this.innerHTML;
-                const thisButton = this;
-                
-                // Immediately change button to "Added!"
-                thisButton.innerHTML = '<i class="fas fa-check"></i> Added!';
-                thisButton.classList.add('added');
-                thisButton.disabled = true;
-                
-                // Create form data
-                let formData = new FormData();
-                formData.append('product_id', productId);
-                formData.append('quantity', 1);
-                formData.append('add_to_cart', true);
-                
-                fetch('shop.php', {
-                    method: 'POST',
-                    body: formData
-                })
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    return response.text();
-                })
-                .then(data => {
-                    try {
-                        // Try to parse as JSON first
-                        const jsonData = JSON.parse(data);
-                        if (jsonData.success) {
-                            // Update cart count if needed
-                            if (document.querySelector('.cart-count')) {
-                                document.querySelector('.cart-count').textContent = jsonData.cart_count;
-                            }
-                            
-                            // Show success message
-                            const successMessage = document.createElement('div');
-                            successMessage.className = 'alert alert-success fade-out';
-                            successMessage.textContent = jsonData.message;
-                            document.querySelector('.container').insertBefore(successMessage, document.querySelector('.top-filters-bar'));
-                            
-                            // Auto-hide the message after 3 seconds
-                            setTimeout(() => {
-                                successMessage.style.opacity = '0';
-                                setTimeout(() => {
-                                    successMessage.remove();
-                                }, 500);
-                            }, 3000);
-                        } else {
-                            console.error('Error:', jsonData.message);
-                        }
-                    } catch (e) {
-                        // If not JSON, it might be a simple message or HTML redirect
-                        console.log('Response was not JSON:', data);
-                    }
+        // Handle product highlighting and scrolling
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const productId = urlParams.get('product_id');
+            
+            if (productId) {
+                const productElement = document.getElementById('product-' + productId);
+                if (productElement) {
+                    // Highlight the product
+                    productElement.classList.add('highlight-product');
                     
-                    // After 1 second, change button back to original text
-                    setTimeout(function() {
-                        thisButton.innerHTML = originalText;
-                        thisButton.classList.remove('added');
-                        thisButton.disabled = false;
-                    }, 1000);
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    // Reset button after error
-                    setTimeout(function() {
-                        thisButton.innerHTML = originalText;
-                        thisButton.classList.remove('added');
-                        thisButton.disabled = false;
-                    }, 1000);
+                    // Scroll to the product
+                    setTimeout(() => {
+                        productElement.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'center'
+                        });
+                    }, 100);
+                    
+                    // Remove highlight after a few seconds
+                    setTimeout(() => {
+                        productElement.classList.remove('highlight-product');
+                    }, 3000);
+                }
+            }
+        }); 
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Debounced search functionality
+            let searchTimeout;
+            const searchInput = document.getElementById('search-input');
+            
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    if (this.value.length >= 3 || this.value.length === 0) {
+                        document.getElementById('filter-form').submit();
+                    }
+                }, 500);
+            });
+            
+            // Optimized filter change handlers
+            const filterSelects = document.querySelectorAll('.filter-select');
+            filterSelects.forEach(select => {
+                select.addEventListener('change', function() {
+                    // Reset to page 1 when filters change
+                    const pageInput = document.querySelector('input[name="page"]');
+                    if (pageInput) pageInput.value = 1;
+                    
+                    // Add loading state
+                    this.classList.add('filter-loading');
+                    document.getElementById('filter-form').submit();
                 });
             });
-        });
-        
-        // Back to top button
-        const btnTop = document.getElementById('btnTop');
-        
-        window.onscroll = function() {
-            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-                btnTop.style.display = "block";
-            } else {
-                btnTop.style.display = "none";
-            }
-        };
-        
-        btnTop.addEventListener('click', function() {
-            document.body.scrollTop = 0; // For Safari
-            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-        });
-    });
-    </script>
-</body> 
-</html>
+            
+            // Enhanced AJAX cart functionality with better error handling
+            const cartButtons = document.querySelectorAll('.add-to-cart-btn:not([disabled])');
+            cartButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
                     
+                    const productId = this.dataset.productId;
+                    const originalText = this.innerHTML;
+                    
+                    // Validate product ID
+                    if (!productId || isNaN(productId)) {
+                        alert('Invalid product ID');
+                        return;
+                    }
+                    
+                    // Disable button and show loading
+                    this.disabled = true;
+                    this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Adding...';
+                    
+                    // AJAX request with improved error handling
+                    fetch('shop.php', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: `add_to_cart=1&product_id=${encodeURIComponent(productId)}&quantity=1`
+                    })
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        return response.text();
+                    })
+                    .then(text => {
+                        let data;
+                        try {
+                            data = JSON.parse(text);
+                        } catch (parseError) {
+                            console.error('JSON Parse Error:', parseError);
+                            console.error('Response text:', text);
+                            throw new Error('Invalid JSON response from server');
+                        }
+                        
+                        if (data.success) {
+                            // Update cart count in header if exists
+                            const cartCount = document.querySelector('.cart-count');
+                            if (cartCount && data.cart_count !== undefined) {
+                                cartCount.textContent = data.cart_count;
+                                cartCount.style.display = data.cart_count > 0 ? 'inline' : 'none';
+                            }
+                            
+                            // Show success feedback
+                            this.innerHTML = '<i class="fas fa-check"></i> Added!';
+                            this.style.backgroundColor = '#28a745';
+                            this.style.color = 'white';
+                            
+                            // Highlight product
+                            const productCard = this.closest('.product-card');
+                            productCard.classList.add('highlight-product');
+                            
+                            // Show success message if product name is available
+                            if (data.product_name) {
+                                console.log(`Successfully added ${data.product_name} to cart`);
+                            }
+                            
+                            setTimeout(() => {
+                                this.innerHTML = originalText;
+                                this.style.backgroundColor = '';
+                                this.style.color = '';
+                                this.disabled = false;
+                                productCard.classList.remove('highlight-product');
+                            }, 2000);
+                        } else {
+                            // Show error message
+                            const errorMsg = data.message || 'Error adding to cart';
+                            alert(errorMsg);
+                            console.error('Cart Error:', errorMsg);
+                            this.innerHTML = originalText;
+                            this.disabled = false;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Fetch Error:', error);
+                        let errorMessage = 'Error adding to cart';
+                        
+                        if (error.message.includes('JSON')) {
+                            errorMessage = 'Server response error. Please try again.';
+                        } else if (error.message.includes('HTTP')) {
+                            errorMessage = 'Network error. Please check your connection.';
+                        }
+                        
+                        alert(errorMessage);
+                        this.innerHTML = originalText;
+                        this.disabled = false;
+                    });
+                });
+            });
+            
+            // Intersection Observer for lazy loading
+            if ('IntersectionObserver' in window) {
+                const imageObserver = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const img = entry.target;
+                            if (img.dataset.src) {
+                                img.src = img.dataset.src;
+                                img.removeAttribute('data-src');
+                                imageObserver.unobserve(img);
+                            }
+                        }
+                    });
+                });
+                
+                document.querySelectorAll('img[data-src]').forEach(img => {
+                    imageObserver.observe(img);
+                });
+            }
+            
+            // Back to top functionality
+            const btnTop = document.getElementById('btnTop');
+            if (btnTop) {
+                window.addEventListener('scroll', () => {
+                    btnTop.style.display = window.pageYOffset > 100 ? 'block' : 'none';
+                });
+                
+                btnTop.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

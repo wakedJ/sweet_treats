@@ -1,0 +1,99 @@
+body {
+            font-family: Arial, sans-serif;
+            background-color: #FFF0F5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+        .container {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            width: 350px;
+            padding: 30px;
+        }
+        .logo {
+            color: #FF69B4;
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .logo i {
+            color: #FF69B4;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .sign-in-link {
+            text-align: center;
+            margin-top: 15px;
+            color: #333;
+        }
+        .sign-in-link a {
+            color: #FF69B4;
+            text-decoration: none;
+        }
+        .success-message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .error-message {
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        small {
+            font-size: 12px;
+            color: #666;
+        }
+        .home-link {
+            text-align: center;
+            margin-top: 15px;
+        }
+        .home-link a {
+            color: #FF69B4;
+            text-decoration: none;
+        }
+        input[type="submit"] {
+            background-color: #FF69B4;
+            color: white;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        input[type="submit"]:hover {
+            background-color: #FF5AA7;
+        }
+        .dev-info {
+            margin-top: 15px;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            font-size: 12px;
+        }
+        .name-fields {
+            display: flex;
+            gap: 10px;
+        }
+        .name-fields input {
+            width: 50%;
+        }
