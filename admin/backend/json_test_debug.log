@@ -1,9 +1,0 @@
-[2025-05-10 11:26:31] JSON Test debug script started
-[2025-05-10 11:26:31] Raw POST data received: 
-[2025-05-10 11:26:31] JSON decode result: Failed with error: Syntax error
-[2025-05-10 11:26:31] POST variables: Array
-(
-)
-
-[2025-05-10 11:26:31] Content-Type header: Not specified
-[2025-05-10 11:26:31] JSON Test debug script completed
